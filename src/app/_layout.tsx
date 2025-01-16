@@ -1,6 +1,7 @@
-import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
 import { Drawer } from "expo-router/drawer";
+import 'react-native-gesture-handler';
 
 export default function Layout() {
     return (

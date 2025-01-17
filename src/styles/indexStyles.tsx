@@ -1,0 +1,107 @@
+import styled from "styled-components/native";
+
+export const BannerContainer = styled.ImageBackground`
+    background-color:#808A96;
+    height:300px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    h1{
+        font-size:54px;
+        color:#FFFFFF;
+        b{
+            font-size:94px;
+            color:#FCC918;
+            margin-right:8px;
+        }
+    }
+`;
+export const BannerText = styled.Text`
+    font-size:24px;
+    color:#FFFFFF;
+    width:80%;
+    font-family: sans-serif;
+`;
+
+export const BannerHighlightText = styled.Text`
+    font-size:28px;
+    color:#FCC918;
+    margin-right:8px;
+    margin-left:8px;
+`;
+export const SearchInputContainer  = styled.View`
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    position: relative;
+    margin-top:25px;
+`;
+
+export const SearchInputText = styled.TextInput`
+    width:90%;
+    border:2px solid #08244B;
+    border-radius:25px;
+    height:64px;
+    padding-left:32px;
+    font-size:18px;
+    font-weight:700;
+    color:#1E4071;
+    background-color:#F6F6F6;
+`;
+
+export const SearchButton = styled.TouchableOpacity`
+    background-color:transparent;
+    border:none;
+    font-size:25px;
+    width:25px;
+    color: #08244B;
+    cursor:pointer;
+    position: absolute;
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    right:35px;
+    transition:0.3s;
+    &:hover{
+        color:#1E4071;
+        opacity:0.8;
+    }
+`;
+
+export const PostListTitle = styled.Text`
+    color:#1E4071;
+    font-size:32px;
+    width:90%;
+    align-self:center;
+`;
+
+export const PostCard = styled.TouchableOpacity`
+    width: 48%;
+    aspect-ratio:1/1;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #08244B;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+`;
+
+export const PostCardImage = styled.Image`
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
+`;
+
+export const PostCardContent = styled.View`
+    background-color: #08244B;
+    padding:8px 16px;
+    height:80px;
+`;
+
+export const PostCardTitle = styled.Text`
+    font-size: 16px;
+    font-weight: 600;
+    color: #FCC918;
+    margin: 0 0 8px;
+`;

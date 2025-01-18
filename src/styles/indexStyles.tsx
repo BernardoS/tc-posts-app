@@ -55,10 +55,6 @@ export const SearchButton = styled.TouchableOpacity`
     justify-content:center;
     right:35px;
     transition:0.3s;
-    &:hover{
-        color:#1E4071;
-        opacity:0.8;
-    }
 `;
 
 export const PostListTitle = styled.Text`

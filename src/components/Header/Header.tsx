@@ -1,8 +1,7 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { ParamListBase, useNavigation, } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { router } from "expo-router";
 import {
     HeaderContainer,
     MenuButton,
@@ -10,7 +9,7 @@ import {
     LogoContainer,
     ContainerLine
 } from "./HeaderStyle";
-import LogoHeaderMenu from "../../assets/logo-header-menu.png";
+import LogoHeaderMenu from "../../assets/images/logo-header-menu.png";
 
 export default function Header() {
 

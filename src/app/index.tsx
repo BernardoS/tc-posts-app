@@ -12,11 +12,9 @@ import {
     SearchInputContainer,
     SearchText
 } from "../styles/indexStyles";
-import BannerHome from '../assets/banner-home.png';
-import { useState } from "react";
+import BannerHome from '../assets/images/banner-home.png';
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { ScrollView } from "react-native-gesture-handler";
 import PostCard from "@/components/PostCard/PostCard";
 
 interface iPostCard {

@@ -9,7 +9,14 @@ export const HeaderContainer = styled.View`
     align-items:center;
     padding:0px 32px;
     font-size:30px;
-    flex-direction:row;
+    flex-direction:column;
+`;
+
+export const ContainerLine = styled.View`
+    display:flex;
+    height:2px;
+    background-color:#FCC918;
+    width:100%
 `;
 
 export const MenuButton = styled.TouchableOpacity`
@@ -25,6 +32,7 @@ export const LogoContainer = styled.View`
     width:100%;
     display:flex;
     align-items:center;
+    
 `
 
 export const LogoHeader = styled.Image`

@@ -7,7 +7,8 @@ import {
     HeaderContainer,
     MenuButton,
     LogoHeader,
-    LogoContainer
+    LogoContainer,
+    ContainerLine
 } from "./HeaderStyle";
 import LogoHeaderMenu from "../../assets/logo-header-menu.png";
 
@@ -20,15 +21,18 @@ export default function Header() {
     }
 
     return (
-        <HeaderContainer >
-            <MenuButton onPress={() => toggleDrawer()}>
-                <FontAwesome size={20} name="bars" color={"#FCC918"} />
-            </MenuButton>
-            <LogoContainer>
-                <LogoHeader source={LogoHeaderMenu} />
-            </LogoContainer>
+        <View>
+            <HeaderContainer>
+                <MenuButton onPress={() => toggleDrawer()}>
+                    <FontAwesome size={20} name="bars" color={"#FCC918"} />
+                </MenuButton>
+                <LogoContainer>
+                    <LogoHeader source={LogoHeaderMenu} />
+                </LogoContainer>
+            </HeaderContainer>
+            <ContainerLine></ContainerLine>
+        </View>
 
-        </HeaderContainer>
     );
 }
 

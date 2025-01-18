@@ -2,24 +2,15 @@ import styled from "styled-components/native";
 
 export const BannerContainer = styled.ImageBackground`
     background-color:#808A96;
-    height:300px;
+    height:250px;
     display:flex;
     align-items:center;
     justify-content:center;
-    h1{
-        font-size:54px;
-        color:#FFFFFF;
-        b{
-            font-size:94px;
-            color:#FCC918;
-            margin-right:8px;
-        }
-    }
 `;
 export const BannerText = styled.Text`
     font-size:24px;
     color:#FFFFFF;
-    width:80%;
+    width:95%;
     font-family: sans-serif;
 `;
 
@@ -39,7 +30,7 @@ export const SearchInputContainer  = styled.View`
 `;
 
 export const SearchInputText = styled.TextInput`
-    width:90%;
+    width:95%;
     border:2px solid #08244B;
     border-radius:25px;
     height:64px;
@@ -72,9 +63,10 @@ export const SearchButton = styled.TouchableOpacity`
 
 export const PostListTitle = styled.Text`
     color:#1E4071;
-    font-size:32px;
-    width:90%;
+    font-size:28px;
+    width:95%;
     align-self:center;
+    margin: 16px 0px;
 `;
 
 export const PostCard = styled.TouchableOpacity`

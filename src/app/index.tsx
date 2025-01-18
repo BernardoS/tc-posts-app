@@ -7,10 +7,6 @@ import {
     BannerContainer,
     BannerHighlightText,
     BannerText,
-    PostCard,
-    PostCardContent,
-    PostCardImage,
-    PostCardTitle,
     PostListTitle,
     SearchButton,
     SearchInputContainer,
@@ -21,8 +17,9 @@ import { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
+import PostCard from "@/components/PostCard/PostCard";
 
-interface PostCard {
+interface iPostCard {
     id: string; // ID do post
     title: string; // Título do post
     coverImage: string; // URL da imagem de capa
@@ -30,7 +27,7 @@ interface PostCard {
 
 export default function Index() {
 
-    const data: PostCard[] = [
+    const data: iPostCard[] = [
         { id: '1', title: 'Geografia - O que é latitude e longitude?', coverImage: 'https://images.pexels.com/photos/335393/pexels-photo-335393.jpeg' },
         { id: '2', title: 'Geografia - O que é latitude e longitude?', coverImage: 'https://images.pexels.com/photos/335393/pexels-photo-335393.jpeg' },
         { id: '3', title: 'Geografia - O que é latitude e longitude?', coverImage: 'https://images.pexels.com/photos/335393/pexels-photo-335393.jpeg' },
@@ -41,14 +38,9 @@ export default function Index() {
         { id: '8', title: 'Geografia - O que é latitude e longitude?', coverImage: 'https://images.pexels.com/photos/335393/pexels-photo-335393.jpeg' },
     ];
 
-    const renderItem = ({ item }: { item: PostCard }) => {
+    const renderItem = ({ item }: { item: iPostCard }) => {
         return (
-            <PostCard id={item.id} >
-                <PostCardImage src={item.coverImage} alt={item.title} className="post-card-image" />
-                <PostCardContent>
-                    <PostCardTitle className="post-card-title">{item.title}</PostCardTitle>
-                </PostCardContent>
-            </PostCard>
+            <PostCard coverImage={item.coverImage} id={item.id} key={item.id} title={item.title} />
         );
     };
 

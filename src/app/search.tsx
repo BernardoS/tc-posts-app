@@ -1,9 +1,16 @@
 import Header from "@/components/Header/Header";
-import { SearchButton, SearchInputContainer, SearchInputText } from "@/styles/searchStyles";
+import PostCard from "@/components/PostCard/PostCard";
+import { PostListTitle, SearchButton, SearchInputContainer, SearchInputText } from "@/styles/searchStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { Alert, Text, View } from "react-native";
+import { Alert, FlatList, Text, View } from "react-native";
+
+interface iPostCard {
+    id: string; // ID do post
+    title: string; // Título do post
+    coverImage?: string; // URL da imagem de capa
+}
 
 export default function Search() {
 
@@ -16,14 +23,31 @@ export default function Search() {
     }
 
     useEffect(() => {
-        if(searchParams.term != null && searchParams.term != "" && searchParams != undefined){
+        if (searchParams.term != null && searchParams.term != "" && searchParams != undefined) {
             setSearchTerm(searchParams.term.toString());
         }
-    }, [searchParams])
+    }, [searchParams]);
+
+    const data: iPostCard[] = [
+            { id: '1', title: 'Geografia - O que é latitude e longitude?' },
+            { id: '2', title: 'Geografia - O que é latitude e longitude?' },
+            { id: '3', title: 'Geografia - O que é latitude e longitude?' },
+            { id: '4', title: 'Geografia - O que é latitude e longitude?' },
+            { id: '5', title: 'Geografia - O que é latitude e longitude?' },
+            { id: '6', title: 'Geografia - O que é latitude e longitude?' },
+            { id: '7', title: 'Geografia - O que é latitude e longitude?' },
+            { id: '8', title: 'Geografia - O que é latitude e longitude?' },
+        ];
+    
+        const renderItem = ({ item }: { item: iPostCard }) => {
+            return (
+                <PostCard id={item.id} key={item.id} title={item.title} />
+            );
+        };
 
     return (
-        <View>
-            <Header/>
+        <View style={{ flex: 1 }}>
+            <Header />
             <SearchInputContainer>
                 <SearchInputText
                     placeholder="O que você quer saber ?"
@@ -39,7 +63,18 @@ export default function Search() {
                         name="search" />
                 </SearchButton>
             </SearchInputContainer>
-            <Text>Pesquisa</Text>
+
+            <PostListTitle style={{ fontFamily: 'MavenPro-Bold' }} >Pesquisa</PostListTitle>
+
+            <FlatList
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={(item: { id: string }) => item.id}
+                numColumns={2} // Define o número de colunas
+                columnWrapperStyle={{ justifyContent: 'space-around', padding: 8 }}
+                keyboardShouldPersistTaps="handled"
+            />
+            
         </View>
     )
 }

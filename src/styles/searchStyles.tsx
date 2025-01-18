@@ -36,3 +36,11 @@ export const SearchButton = styled.TouchableOpacity`
     right:35px;
     transition:0.3s;
 `;
+
+export const PostListTitle = styled.Text`
+    color:#1E4071;
+    font-size:28px;
+    width:95%;
+    align-self:center;
+    margin: 16px 0px;
+`;

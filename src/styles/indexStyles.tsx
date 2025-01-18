@@ -29,36 +29,25 @@ export const SearchInputContainer  = styled.View`
     margin-top:25px;
 `;
 
-export const SearchInputText = styled.TextInput`
+export const SearchButton = styled.TouchableOpacity`
     width:95%;
-    border:2px solid #08244B;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
     border-radius:25px;
     height:64px;
-    padding-left:32px;
+    padding:0px 32px;
     font-size:18px;
     font-weight:700;
-    color:#1E4071;
-    background-color:#F6F6F6;
+    background-color:#08244B;
+    color:#FCC918;
+    border:2px solid #FCC918;
 `;
 
-export const SearchButton = styled.TouchableOpacity`
-    background-color:transparent;
-    border:none;
-    font-size:25px;
-    width:25px;
-    color: #08244B;
-    cursor:pointer;
-    position: absolute;
-    height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    right:35px;
-    transition:0.3s;
-    &:hover{
-        color:#1E4071;
-        opacity:0.8;
-    }
+export const SearchText = styled.Text`
+    font-size:18px;
+    color:#FCC918;
 `;
 
 export const PostListTitle = styled.Text`
@@ -67,33 +56,4 @@ export const PostListTitle = styled.Text`
     width:95%;
     align-self:center;
     margin: 16px 0px;
-`;
-
-export const PostCard = styled.TouchableOpacity`
-    width: 48%;
-    aspect-ratio:1/1;
-    border-radius: 12px;
-    overflow: hidden;
-    background-color: #08244B;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-`;
-
-export const PostCardImage = styled.Image`
-    width: 100%;
-    height: 60%;
-    object-fit: cover;
-`;
-
-export const PostCardContent = styled.View`
-    background-color: #08244B;
-    padding:8px 16px;
-    height:80px;
-`;
-
-export const PostCardTitle = styled.Text`
-    font-size: 16px;
-    font-weight: 600;
-    color: #FCC918;
-    margin: 0 0 8px;
 `;

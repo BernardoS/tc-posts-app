@@ -1,25 +1,25 @@
 import Header from "@/components/Header/Header";
-import { Dimensions, Image, ImageBackground, Text, TextInput, View, StyleSheet, FlatList, FlatListProps } from "react-native";
+import {  
+    View, 
+    FlatList 
+} from "react-native";
 import {
     BannerContainer,
     BannerHighlightText,
     BannerText,
-    PostCard,
-    PostCardContent,
-    PostCardImage,
-    PostCardTitle,
     PostListTitle,
     SearchButton,
     SearchInputContainer,
-    SearchInputText
+    SearchText
 } from "../styles/indexStyles";
 import BannerHome from '../assets/banner-home.png';
 import { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
+import PostCard from "@/components/PostCard/PostCard";
 
-interface PostCard {
+interface iPostCard {
     id: string; // ID do post
     title: string; // Título do post
     coverImage: string; // URL da imagem de capa
@@ -27,13 +27,7 @@ interface PostCard {
 
 export default function Index() {
 
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const handleSearch = () => {
-        router.navigate(`/search?term=${searchTerm}`);
-    }
-
-    const data: PostCard[] = [
+    const data: iPostCard[] = [
         { id: '1', title: 'Geografia - O que é latitude e longitude?', coverImage: 'https://images.pexels.com/photos/335393/pexels-photo-335393.jpeg' },
         { id: '2', title: 'Geografia - O que é latitude e longitude?', coverImage: 'https://images.pexels.com/photos/335393/pexels-photo-335393.jpeg' },
         { id: '3', title: 'Geografia - O que é latitude e longitude?', coverImage: 'https://images.pexels.com/photos/335393/pexels-photo-335393.jpeg' },
@@ -44,21 +38,16 @@ export default function Index() {
         { id: '8', title: 'Geografia - O que é latitude e longitude?', coverImage: 'https://images.pexels.com/photos/335393/pexels-photo-335393.jpeg' },
     ];
 
-    const renderItem = ({ item }: { item: PostCard }) => {
+    const renderItem = ({ item }: { item: iPostCard }) => {
         return (
-            <PostCard id={item.id} >
-                <PostCardImage src={item.coverImage} alt={item.title} className="post-card-image" />
-                <PostCardContent>
-                    <PostCardTitle className="post-card-title">{item.title}</PostCardTitle>
-                </PostCardContent>
-            </PostCard>
+            <PostCard coverImage={item.coverImage} id={item.id} key={item.id} title={item.title} />
         );
     };
 
 
     const ListHeader = () => {
         return (
-            <View>
+            <View >
                 <BannerContainer source={BannerHome} resizeMode="cover">
                     <BannerText style={{ fontFamily: 'MavenPro-Bold' }}>
                         Encontre aqui o que você precisa para
@@ -66,18 +55,16 @@ export default function Index() {
                         de todas as matérias
                     </BannerText>
                     <SearchInputContainer>
-                        <SearchInputText
-                            placeholder="O que você quer saber ?"
-                            value={searchTerm}
-                            onChangeText={setSearchTerm}
-                        />
                         <SearchButton
                             type="button"
-                            onPress={handleSearch} >
+                            onPress={() => router.navigate('/search')} >
+                            <SearchText style={{ fontFamily: 'MavenPro-Bold' }}>
+                                Pesquisar um post
+                            </SearchText>
                             <FontAwesome
                                 size={24}
-                                color={"#08244B"}
-                                name="search" />
+                                color={"#FCC918"}
+                                name="arrow-right" />
                         </SearchButton>
                     </SearchInputContainer>
                 </BannerContainer>
@@ -98,8 +85,9 @@ export default function Index() {
                 renderItem={renderItem}
                 keyExtractor={(item: { id: string }) => item.id}
                 numColumns={2} // Define o número de colunas
-                columnWrapperStyle={{justifyContent:'space-around',padding:8}} 
+                columnWrapperStyle={{ justifyContent: 'space-around', padding: 8 }}
                 ListHeaderComponent={<ListHeader />}
+                keyboardShouldPersistTaps="handled"
             />
 
         </View>

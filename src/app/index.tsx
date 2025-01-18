@@ -1,5 +1,8 @@
 import Header from "@/components/Header/Header";
-import { Dimensions, Image, ImageBackground, Text, TextInput, View, StyleSheet, FlatList, FlatListProps } from "react-native";
+import {  
+    View, 
+    FlatList 
+} from "react-native";
 import {
     BannerContainer,
     BannerHighlightText,
@@ -11,7 +14,7 @@ import {
     PostListTitle,
     SearchButton,
     SearchInputContainer,
-    SearchInputText
+    SearchText
 } from "../styles/indexStyles";
 import BannerHome from '../assets/banner-home.png';
 import { useState } from "react";
@@ -26,12 +29,6 @@ interface PostCard {
 }
 
 export default function Index() {
-
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const handleSearch = () => {
-        router.navigate(`/search?term=${searchTerm}`);
-    }
 
     const data: PostCard[] = [
         { id: '1', title: 'Geografia - O que é latitude e longitude?', coverImage: 'https://images.pexels.com/photos/335393/pexels-photo-335393.jpeg' },
@@ -58,7 +55,7 @@ export default function Index() {
 
     const ListHeader = () => {
         return (
-            <View>
+            <View >
                 <BannerContainer source={BannerHome} resizeMode="cover">
                     <BannerText style={{ fontFamily: 'MavenPro-Bold' }}>
                         Encontre aqui o que você precisa para
@@ -66,18 +63,16 @@ export default function Index() {
                         de todas as matérias
                     </BannerText>
                     <SearchInputContainer>
-                        <SearchInputText
-                            placeholder="O que você quer saber ?"
-                            value={searchTerm}
-                            onChangeText={setSearchTerm}
-                        />
                         <SearchButton
                             type="button"
-                            onPress={handleSearch} >
+                            onPress={() => router.navigate('/search')} >
+                            <SearchText style={{ fontFamily: 'MavenPro-Bold' }}>
+                                Pesquisar um post
+                            </SearchText>
                             <FontAwesome
                                 size={24}
-                                color={"#08244B"}
-                                name="search" />
+                                color={"#FCC918"}
+                                name="arrow-right" />
                         </SearchButton>
                     </SearchInputContainer>
                 </BannerContainer>
@@ -98,8 +93,9 @@ export default function Index() {
                 renderItem={renderItem}
                 keyExtractor={(item: { id: string }) => item.id}
                 numColumns={2} // Define o número de colunas
-                columnWrapperStyle={{justifyContent:'space-around',padding:8}} 
+                columnWrapperStyle={{ justifyContent: 'space-around', padding: 8 }}
                 ListHeaderComponent={<ListHeader />}
+                keyboardShouldPersistTaps="handled"
             />
 
         </View>

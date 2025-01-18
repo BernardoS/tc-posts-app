@@ -29,32 +29,25 @@ export const SearchInputContainer  = styled.View`
     margin-top:25px;
 `;
 
-export const SearchInputText = styled.TextInput`
+export const SearchButton = styled.TouchableOpacity`
     width:95%;
-    border:2px solid #08244B;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
     border-radius:25px;
     height:64px;
-    padding-left:32px;
+    padding:0px 32px;
     font-size:18px;
     font-weight:700;
-    color:#1E4071;
-    background-color:#F6F6F6;
+    background-color:#08244B;
+    color:#FCC918;
+    border:2px solid #FCC918;
 `;
 
-export const SearchButton = styled.TouchableOpacity`
-    background-color:transparent;
-    border:none;
-    font-size:25px;
-    width:25px;
-    color: #08244B;
-    cursor:pointer;
-    position: absolute;
-    height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    right:35px;
-    transition:0.3s;
+export const SearchText = styled.Text`
+    font-size:18px;
+    color:#FCC918;
 `;
 
 export const PostListTitle = styled.Text`

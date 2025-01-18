@@ -1,3 +1,4 @@
+import Header from "@/components/Header/Header";
 import { SearchButton, SearchInputContainer, SearchInputText } from "@/styles/searchStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
@@ -22,6 +23,7 @@ export default function Search() {
 
     return (
         <View>
+            <Header/>
             <SearchInputContainer>
                 <SearchInputText
                     placeholder="O que você quer saber ?"

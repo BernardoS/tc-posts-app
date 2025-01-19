@@ -41,13 +41,6 @@ export default function Layout() {
                         drawerIcon: ({ size, color }) => <FontAwesome size={size} color={color} name="user" />,
                         drawerLabel: 'Área do professor'
                     }} />
-                <Drawer.Screen
-                    name="search"
-                    options={{
-                        headerShown: false,
-                        drawerIcon: ({ size, color }) => <FontAwesome size={size} color={color} name="search" />,
-                        drawerLabel: 'Pesquisar posts'
-                    }} />
             </Drawer>
         </GestureHandlerRootView>
     )

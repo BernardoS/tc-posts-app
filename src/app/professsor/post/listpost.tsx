@@ -1,5 +1,7 @@
+import { Text } from "react-native"
+
 export default function ListPost(){
     return (
-        <h1>List Post</h1>
+        <Text>List Post</Text>
     )
 }

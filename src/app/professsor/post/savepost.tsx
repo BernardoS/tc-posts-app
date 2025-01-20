@@ -1,5 +1,7 @@
+import { Text } from "react-native"
+
 export default function SavePost(){
     return (
-        <h1>Save Post</h1>
+        <Text>Save Post</Text>
     )
 }

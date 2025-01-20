@@ -1,5 +1,7 @@
+import { Text } from "react-native"
+
 export default function ListProfessor(){
     return (
-        <h1>List Professor</h1>
+        <Text>List Professor</Text>
     )
 }

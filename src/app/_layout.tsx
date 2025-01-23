@@ -39,7 +39,7 @@ export default function Layout() {
                     options={{
                         headerShown: false,
                         drawerIcon: ({ size, color }) => <FontAwesome size={size} color={color} name="user" />,
-                        drawerLabel: 'Login'
+                        drawerLabel: 'Área do professor'
                     }} />
                 <Drawer.Screen
                     name="post/[id]"

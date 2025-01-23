@@ -5,7 +5,7 @@ export const PostCardContainer = styled.TouchableOpacity`
     aspect-ratio:5/1;
     border-radius: 12px;
     overflow: hidden;
-    background-color: #08244B;
+    background-color: #1E4071;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display:flex;
@@ -21,7 +21,7 @@ export const PostCardImage = styled.Image`
 `;
 
 export const PostCardContent = styled.View`
-    background-color: #08244B;
+    background-color: #1E4071;
     padding:8px 16px;
     height:80px;
 `;

@@ -1,5 +1,7 @@
+import { Text } from "react-native";
+
 export default function ListStudent(){
     return (
-        <h1>List Student</h1>
+        <Text>List Student</Text>
     )
 }

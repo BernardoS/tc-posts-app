@@ -25,7 +25,7 @@ export default function Layout() {
     }
 
     return (
-        <GestureHandlerRootView style={{ flex: 1,}}>
+        <GestureHandlerRootView style={{ flex: 1, }}>
             <Drawer>
                 <Drawer.Screen
                     name="index"
@@ -40,6 +40,48 @@ export default function Layout() {
                         headerShown: false,
                         drawerIcon: ({ size, color }) => <FontAwesome size={size} color={color} name="user" />,
                         drawerLabel: 'Área do professor'
+                    }} />
+                <Drawer.Screen
+                    name="post/[id]"
+                    options={{
+                        drawerItemStyle: { display: 'none' },
+                        headerShown: false
+                    }} />
+                <Drawer.Screen
+                    name="aluno/admin/liststudent"
+                    options={{
+                        drawerItemStyle: { display: 'none' },
+                        headerShown: false
+                    }} />
+                <Drawer.Screen
+                    name="aluno/admin/savestudent"
+                    options={{
+                        drawerItemStyle: { display: 'none' },
+                        headerShown: false
+                    }} />
+                <Drawer.Screen
+                    name="professor/admin/saveprofessor"
+                    options={{
+                        drawerItemStyle: { display: 'none' },
+                        headerShown: false
+                    }} />
+                <Drawer.Screen
+                    name="professor/admin/listprofessor"
+                    options={{
+                        drawerItemStyle: { display: 'none' },
+                        headerShown: false
+                    }} />
+                <Drawer.Screen
+                    name="professor/admin/listpost"
+                    options={{
+                        drawerItemStyle: { display: 'none' },
+                        headerShown: false
+                    }} />
+                <Drawer.Screen
+                    name="professor/admin/savepost"
+                    options={{
+                        drawerItemStyle: { display: 'none' },
+                        headerShown: false
                     }} />
             </Drawer>
         </GestureHandlerRootView>

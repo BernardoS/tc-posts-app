@@ -1,5 +1,7 @@
+import { Text } from "react-native"
+
 export default function SaveStudent(){
     return (
-        <h1>Save Student</h1>
+        <Text>Save Student</Text>
     )
 }

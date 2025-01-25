@@ -3,7 +3,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Text } from "react-native";
-import GenericPostCover from "../../assets/images/generic-post-cover.png";
+import GenericPostCover from "../../../assets/images/generic-post-cover.png";
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
 
 interface iPost {

@@ -90,6 +90,6 @@ export const LoginButton = styled.TouchableOpacity`
     font-weight:700;
     border-radius:10px;
     padding:8px 16px;
-    width:45%;
+    width:100%;
     margin:32px 0px;
 `;

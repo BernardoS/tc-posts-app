@@ -1,79 +1,75 @@
-import Header from "@/components/Header/Header";
-import PostCard from "@/components/PostCard/PostCard";
-import { PostListTitle, SearchButton, SearchInputContainer, SearchInputText } from "@/styles/indexStyles";
-import { FontAwesome } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import {
+    LoginContainer,
+    LoginContent,
+    LoginSubTitle,
+    LoginTitle,
+    LoginInput,
+    Logo,
+    WhiteSeparator,
+    LoginInputLabel,
+    ButtonContainer,
+    LoginButton,
+    RegisterButton
+} from "@/styles/loginStyles";
+import LogoHeaderMenu from "../assets/images/logo-header-menu.png";
 import { useEffect, useState } from "react";
-import { Alert, FlatList, Text, View } from "react-native";
+import { router, useNavigation } from "expo-router";
+import { Text } from "react-native";
+import { useAuth } from "@/contexts/AuthContext";
 
-interface iPostCard {
-    id: string; // ID do post
-    title: string; // Título do post
-    coverImage?: string; // URL da imagem de capa
-}
+export default function Index() {
 
-export default function Search() {
+    const navigation = useNavigation();
 
-    const searchParams = useLocalSearchParams();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const { isLoggedIn, setLoggedInTrue } = useAuth();
 
-    const [searchTerm, setSearchTerm] = useState('');
+    /*useEffect(()=>{
+        const user = auth.currentUser;
+        console.log(user);
+        console.log(user?.email);
+        if(user != null){
+            navigation.navigate('home');
+        }
+    },[])*/
 
-    const handleSearch = () => {
-        console.log("Pesquisa realizada com o termo:"+searchTerm)
+
+    const handleLogin = async () => {
+        try {
+            //const response = await signInWithEmailAndPassword(auth,email,password);
+            setLoggedInTrue();
+            router.navigate('/private');
+        } catch (error) {
+            console.log('Error');
+            //setError(error.message);
+        }
     }
 
-    useEffect(() => {
-        if (searchParams.term != null && searchParams.term != "" && searchParams != undefined) {
-            setSearchTerm(searchParams.term.toString());
-        }
-    }, [searchParams]);
-
-    const data: iPostCard[] = [
-            { id: '1', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '2', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '3', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '4', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '5', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '6', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '7', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '8', title: 'Geografia - O que é latitude e longitude?' },
-        ];
-    
-        const renderItem = ({ item }: { item: iPostCard }) => {
-            return (
-                <PostCard id={item.id} key={item.id} title={item.title} />
-            );
-        };
-
     return (
-        <View style={{ flex: 1 }}>
-            <Header />
-            <PostListTitle style={{ fontFamily: 'MavenPro-Bold' }} >Encontre aqui o que você precisa para saber mais de todas as matérias</PostListTitle>
-            <SearchInputContainer>
-                <SearchInputText
-                    placeholder="O que você quer saber ?"
-                    value={searchTerm}
-                    onChangeText={setSearchTerm}
-                />
-                <SearchButton
-                    type="button"
-                    onPress={handleSearch} >
-                    <FontAwesome
-                        size={24}
-                        color={"#08244B"}
-                        name="search" />
-                </SearchButton>
-            </SearchInputContainer>
-
-            <FlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={(item: { id: string }) => item.id}
-                style={{padding:10}}
-                keyboardShouldPersistTaps="handled"
-            />
-            
-        </View>
+        <LoginContainer>
+            <LoginContent>
+                <Logo source={LogoHeaderMenu} />
+                <WhiteSeparator />
+                <LoginSubTitle style={{ fontFamily: 'MavenPro-Bold' }}>Login</LoginSubTitle>
+                <LoginInputLabel style={{ fontFamily: 'MavenPro-Bold' }}>E-mail</LoginInputLabel>
+                <LoginInput
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder="Digite o seu e-mail" />
+                <LoginInputLabel style={{ fontFamily: 'MavenPro-Bold' }}>Senha</LoginInputLabel>
+                <LoginInput
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="Digite sua senha"
+                    secureTextEntry />
+                <ButtonContainer>
+                    <LoginButton onPress={handleLogin }>
+                        <Text style={{ fontFamily: 'MavenPro-Bold', fontSize: 16, color:'#08244B' }}>Entrar</Text>
+                    </LoginButton>
+                </ButtonContainer>
+            </LoginContent>
+        </LoginContainer>
     )
 }
 

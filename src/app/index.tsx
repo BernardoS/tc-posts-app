@@ -15,6 +15,7 @@ import LogoHeaderMenu from "../assets/images/logo-header-menu.png";
 import { useEffect, useState } from "react";
 import { router, useNavigation } from "expo-router";
 import { Text } from "react-native";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Index() {
 
@@ -22,6 +23,7 @@ export default function Index() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { isLoggedIn, setLoggedInTrue } = useAuth();
 
     /*useEffect(()=>{
         const user = auth.currentUser;
@@ -36,6 +38,7 @@ export default function Index() {
     const handleLogin = async () => {
         try {
             //const response = await signInWithEmailAndPassword(auth,email,password);
+            setLoggedInTrue();
             router.navigate('/private');
         } catch (error) {
             console.log('Error');

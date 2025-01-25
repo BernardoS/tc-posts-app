@@ -1,13 +1,16 @@
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { FontAwesome } from "@expo/vector-icons";
 import { Drawer } from "expo-router/drawer";
 import 'react-native-gesture-handler';
 import { useEffect, useState } from "react";
 import * as Font from 'expo-font';
+import { useAuth } from "@/contexts/AuthContext";
+import { Redirect } from "expo-router";
 
 export default function Layout() {
 
     const [fontsLoaded, setFontsLoaded] = useState(false);
+
+    const { isLoggedIn } = useAuth();
 
     useEffect(() => {
         (async () => {
@@ -22,6 +25,10 @@ export default function Layout() {
 
     if (!fontsLoaded) {
         return null; // Ou exibir um carregamento
+    }
+
+    if(!isLoggedIn){
+        return <Redirect href="/" />
     }
 
     return (

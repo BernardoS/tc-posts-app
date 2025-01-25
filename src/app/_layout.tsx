@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import * as Font from 'expo-font';
 import { Slot } from "expo-router";
 import { View } from "react-native";
+import { AuthProvider } from '@/contexts/AuthContext';
 
 export default function Layout() {
 
@@ -24,8 +25,10 @@ export default function Layout() {
     }
 
     return (
-        <View style={{flex:1}}>
-            <Slot/>
-        </View>
+        <AuthProvider>
+            <View style={{ flex: 1 }}>
+                <Slot />
+            </View>
+        </AuthProvider>
     )
 }

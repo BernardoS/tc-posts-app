@@ -1,10 +1,11 @@
-import { PostDate, PostHeader, PostSectionContainer, PostSectionTitle, PostTitle } from "@/styles/postStyles";
-import { useLocalSearchParams } from "expo-router";
+import { DeleteButton, EditButton, PostActionContainer, PostDate, PostHeader, PostSectionContainer, PostSectionTitle, PostTitle } from "@/styles/postStyles";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native";
 import GenericPostCover from "../../../assets/images/generic-post-cover.png";
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
+import { FontAwesome } from "@expo/vector-icons";
 
 interface iPost {
     _id: string;
@@ -37,9 +38,19 @@ export default function Post() {
                 Post
             </CloseableHeader>
             <PostHeader source={GenericPostCover} reziseMode="cover" >
-                <PostTitle style={{ fontFamily: 'MavenPro-Bold' }}>Geografia - O que é latitude e longitude ? E como calcular a massa molar do Cobre E como descobrir a altura de um prédio de principalmente uns 4 andares e tudo mais, até pq é</PostTitle>
+                <PostTitle style={{ fontFamily: 'MavenPro-Bold' }}>Geografia - O que é latitude e longitude ? </PostTitle>
                 <PostDate style={{ fontFamily: 'MavenPro-Bold' }}>Criado em: 22/11/2024</PostDate>
             </PostHeader>
+            <PostActionContainer>
+                <EditButton onPress={() => router.navigate(`/private/post/savepost?id=${id}`)} >
+                    <FontAwesome name="pencil" size={16} color="#08244B" />
+                    <Text style={{ fontFamily: 'MavenPro-Bold', color: "#08244B" }}> Editar Post</Text>
+                </EditButton>
+                <DeleteButton onPress={() => console.log("Deletar Post")} >
+                    <FontAwesome name="trash" size={16} color="#FCC918" />
+                    <Text style={{ fontFamily: 'MavenPro-Bold', color: "#FCC918" }}> Deletar Post</Text>
+                </DeleteButton>
+            </PostActionContainer>
             <PostSectionContainer>
                 <PostSectionTitle style={{ fontFamily: 'MavenPro-Bold' }} >Descrição</PostSectionTitle>
                 <Text style={{ fontFamily: 'MavenPro-Bold' }} >

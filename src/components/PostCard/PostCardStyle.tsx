@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 
 export const PostCardContainer = styled.TouchableOpacity`
     width: 100%;
-    aspect-ratio:5/1;
+    aspect-ratio:2.5/1;
     border-radius: 12px;
     overflow: hidden;
     background-color: #1E4071;
@@ -23,7 +23,7 @@ export const PostCardImage = styled.Image`
 export const PostCardContent = styled.View`
     background-color: #1E4071;
     padding:8px 16px;
-    height:80px;
+    height:90%;
 `;
 
 export const PostCardTitle = styled.Text`
@@ -31,4 +31,22 @@ export const PostCardTitle = styled.Text`
     font-weight: 600;
     color: #FCC918;
     margin: 0 0 8px;
+`;
+
+export const PostDescriptionContainer = styled.View`
+    width:90%;
+`;
+
+export const PostCardSubtitile = styled.Text`
+    font-size: 16px;
+    font-weight: 600;
+    color:#FFFFFF;
+    margin: 0 0 8px;
+`;
+
+export const PostCardLine = styled.View`
+    width:100%;
+    height:2px;
+    background-color:#f6f6f6;
+    margin-bottom:4px;
 `;

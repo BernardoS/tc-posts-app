@@ -6,10 +6,17 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert, FlatList, Text, View } from "react-native";
 
-interface iPostCard {
-    id: string; // ID do post
-    title: string; // Título do post
-    coverImage?: string; // URL da imagem de capa
+
+interface iPost {
+    _id: string;
+    title?: string;
+    description?: string;
+    content?: string;
+    author?: string;
+    modifyDate?: string;
+    createdAt?: string;
+    updatedAt?: string;
+    __v?: number;
 }
 
 export default function Search() {
@@ -28,20 +35,14 @@ export default function Search() {
         }
     }, [searchParams]);
 
-    const data: iPostCard[] = [
-            { id: '1', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '2', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '3', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '4', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '5', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '6', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '7', title: 'Geografia - O que é latitude e longitude?' },
-            { id: '8', title: 'Geografia - O que é latitude e longitude?' },
+    const data: iPost[] = [
+            { _id: '1', title: 'Geografia - O que é latitude e longitude?', description:'Descubra como a latitude e a longitude ajudam a localizar qualquer ponto no planeta e sua importância para a navegação e os sistemas de GPS' },
+            { _id: '2', title: 'Geografia - O que é latitude e longitude?', description:'Descubra como a latitude e a longitude ajudam a localizar qualquer ponto no planeta e sua importância para a navegação e os sistemas de GPS' },
         ];
     
-        const renderItem = ({ item }: { item: iPostCard }) => {
+        const renderItem = ({ item }: { item: iPost }) => {
             return (
-                <PostCard id={item.id} key={item.id} title={item.title} />
+                <PostCard id={item._id} key={item._id} title={item.title}  description={item.description} />
             );
         };
 
@@ -68,7 +69,7 @@ export default function Search() {
             <FlatList
                 data={data}
                 renderItem={renderItem}
-                keyExtractor={(item: { id: string }) => item.id}
+                keyExtractor={(item: { _id: string }) => item._id}
                 style={{padding:10}}
                 keyboardShouldPersistTaps="handled"
             />

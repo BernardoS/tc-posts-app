@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import * as Font from 'expo-font';
 import { useAuth } from "@/contexts/AuthContext";
 import { Redirect } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function Layout() {
 
@@ -27,13 +28,63 @@ export default function Layout() {
         return null; // Ou exibir um carregamento
     }
 
-    if(!isLoggedIn){
+    if (!isLoggedIn) {
         return <Redirect href="/" />
     }
 
     return (
         <GestureHandlerRootView style={{ flex: 1, }}>
-            <Drawer screenOptions={{headerShown:false}}>
+            <Drawer screenOptions={{ headerShown: false }}>
+                <Drawer.Screen
+                    name="index"
+                    options={{
+                        drawerLabel: "Página inicial",
+                        drawerIcon: ({ size, color }) => <FontAwesome size={size} color={color} name="home" />
+                    }}
+                />
+                <Drawer.Screen
+                    name="professor/managesystem"
+                    options={{
+                        drawerLabel: "Gerenciar plataforma",
+                        drawerIcon: ({ size, color }) => <FontAwesome size={size} color={color} name="cogs" />
+                    }}
+                />
+                 <Drawer.Screen
+                    name="user/listuser"
+                    options={{
+                        drawerItemStyle:{display:'none'}
+                    }}
+                />
+                <Drawer.Screen
+                    name="user/saveuser"
+                    options={{
+                        drawerItemStyle:{display:'none'}
+                    }}
+                />
+                 <Drawer.Screen
+                    name="professor/manageuser"
+                    options={{
+                        drawerItemStyle:{display:'none'}
+                    }}
+                />
+                <Drawer.Screen
+                    name="post/[id]"
+                    options={{
+                        drawerItemStyle:{display:'none'}
+                    }}
+                />
+                <Drawer.Screen
+                    name="post/listpost"
+                    options={{
+                        drawerItemStyle:{display:'none'}
+                    }}
+                />
+                <Drawer.Screen
+                    name="post/savepost"
+                    options={{
+                        drawerItemStyle:{display:'none'}
+                    }}
+                />
             </Drawer>
         </GestureHandlerRootView>
     )

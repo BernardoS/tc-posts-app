@@ -1,6 +1,11 @@
 import Header from "@/components/Header/Header";
 import PostCard from "@/components/PostCard/PostCard";
-import { PostListTitle, SearchButton, SearchInputContainer, SearchInputText } from "@/styles/indexStyles";
+import { 
+    PostListSubTitle, 
+    PostListTitle, 
+    SearchButton, 
+    SearchInputContainer, 
+    SearchInputText } from "@/styles/indexStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -49,7 +54,8 @@ export default function Search() {
     return (
         <View style={{ flex: 1 }}>
             <Header />
-            <PostListTitle style={{ fontFamily: 'MavenPro-Bold' }} >Encontre aqui o que você precisa para saber mais de todas as matérias</PostListTitle>
+            <PostListTitle style={{ fontFamily: 'MavenPro-Bold' }} >Pesquisar Posts</PostListTitle>
+            <PostListSubTitle style={{ fontFamily: 'MavenPro-Bold' }}>Encontre aqui o que você precisa para saber mais de todas as matérias</PostListSubTitle>
             <SearchInputContainer>
                 <SearchInputText
                     placeholder="O que você quer saber ?"

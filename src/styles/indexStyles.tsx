@@ -39,7 +39,16 @@ export const SearchButton = styled.TouchableOpacity`
 export const PostListTitle = styled.Text`
     color:#1E4071;
     font-size:28px;
-    width:95%;
+    width:90%;
     align-self:center;
+    margin: 8px 0px;
+`;
+
+export const PostListSubTitle = styled.Text`
+    color:#1E4071;
+    opacity:0.8;
+    width:90%;
+    align-self:center;
+    font-size:16px;
     margin: 8px 0px;
 `;

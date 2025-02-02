@@ -68,7 +68,7 @@ export default function SavePost() {
                     value={description}
                     onChangeText={setDescription}
                     placeholder="Digite o conteúdo" />
-                <InputLabel style={{ fontFamily: 'MavenPro-Bold' }}>Título</InputLabel>
+                <InputLabel style={{ fontFamily: 'MavenPro-Bold' }}>Autor</InputLabel>
                 <SmallInput
                     value={title}
                     onChangeText={setTitle}

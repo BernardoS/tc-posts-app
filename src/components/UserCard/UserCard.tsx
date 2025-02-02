@@ -45,7 +45,7 @@ const UserCard: React.FC<UserCardProps> = ({ id, name, email, permission }) => {
     }
 
     return (
-        <UserCardContainer id={id} onPress={() => router.navigate(`/private/user/saveuser?id=${id}`)} >
+        <UserCardContainer id={id} onPress={() => router.navigate(`/private/user/saveuser?id=${id}&type=${permission}`)} >
             <UserCardIconContainer>
                 <FontAwesome5 size={24} color="#FCC918" name={permission == "professor" ? "user-tie" : "user-graduate"} />
             </UserCardIconContainer>

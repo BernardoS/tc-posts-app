@@ -41,7 +41,7 @@ export default function SavePost() {
 
     return (
         <ScrollView>
-            <CloseableHeader onCloseRoute={`/private/post/${id}`} >
+            <CloseableHeader onCloseRoute={`/private/post/listpost`} >
                 {id ? "Editar Post" : "Criar Post"}
             </CloseableHeader>
             <SavePostContent>

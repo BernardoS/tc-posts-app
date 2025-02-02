@@ -1,11 +1,12 @@
+import { useLocalSearchParams } from "expo-router";
 import { Text } from "react-native"
 
-interface SaveUserProps{
-    userPermission:string;
-}
 
-export default function SaveProfessor({userPermission}:SaveUserProps){
+export default function SaveUser(){
+
+    const { id } = useLocalSearchParams();
+
     return (
-        <Text>Save User: {userPermission}</Text>
+        <Text>Save User: {id}</Text>
     )
 }

@@ -34,19 +34,28 @@ export default function Layout() {
 
     return (
         <GestureHandlerRootView style={{ flex: 1, }}>
-            <Drawer screenOptions={{ headerShown: false }}>
+            <Drawer 
+                screenOptions={{ 
+                    headerShown: false,
+                    drawerStyle:{
+                        backgroundColor:"#08244B"
+                    }
+                 }}
+                >
                 <Drawer.Screen
                     name="index"
                     options={{
                         drawerLabel: "Página inicial",
-                        drawerIcon: ({ size, color }) => <FontAwesome size={size} color={color} name="home" />
+                        drawerLabelStyle:{color:"#FCC918"},
+                        drawerIcon: ({ size }) => <FontAwesome size={size} color="#FCC918" name="home" />,
                     }}
                 />
                 <Drawer.Screen
                     name="professor/managesystem"
                     options={{
                         drawerLabel: "Gerenciar plataforma",
-                        drawerIcon: ({ size, color }) => <FontAwesome size={size} color={color} name="cogs" />
+                        drawerLabelStyle:{color:"#FCC918"},
+                        drawerIcon: ({ size }) => <FontAwesome size={size} color="#FCC918" name="cogs" />
                     }}
                 />
                  <Drawer.Screen

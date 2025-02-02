@@ -24,6 +24,7 @@ export const PostCardContent = styled.View`
     background-color: #1E4071;
     padding:8px 16px;
     height:90%;
+    width:87%
 `;
 
 export const PostCardTitle = styled.Text`
@@ -31,6 +32,7 @@ export const PostCardTitle = styled.Text`
     font-weight: 600;
     color: #FCC918;
     margin: 0 0 8px;
+    width:100%;
 `;
 
 export const PostDescriptionContainer = styled.View`

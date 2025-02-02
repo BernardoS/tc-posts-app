@@ -6,14 +6,15 @@ import { Text, View } from "react-native"
 
 export default function SaveUser() {
 
-    const { id } = useLocalSearchParams();
+    const { id, type } = useLocalSearchParams();
 
     return (
         <View>
-            <CloseableHeader onCloseRoute="/private/user/manageuser">
-                {id ? <>Editar usuário</> : <>Criar usuário</>}
+            <CloseableHeader onCloseRoute={`/private/user/listuser?type=${type}`}>
+                {id ? <>Editar </> : <>Criar </>}
+                {type == "professor" ? <>Professor </> : <>Aluno </>}
             </CloseableHeader>
-            <Text>Save User: {id}</Text>
+            <Text>Save User: {type}</Text>
         </View>
 
     )

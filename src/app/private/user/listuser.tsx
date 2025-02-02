@@ -58,10 +58,10 @@ export default function ListUser() {
                         {type == "professor" && <>Aqui você pode gerenciar os professores da plataforma, abaixo você tem a lista de todos os professores que podem gerenciar a plataforma</>}
                         {type == "student" && <>Aqui você pode gerenciar os alunos da plataforma, abaixo você tem a lista de todos os alunos que podem entrar na plataforma</>}
                     </ManageSystemSubTitle>
-                    <CreateUserButton onPress={()=>router.navigate("/private/user/saveuser")}>
+                    <CreateUserButton onPress={()=>router.navigate(`/private/user/saveuser?type=${type}`)}>
                         <FontAwesome size={18} name="user-plus"/>
                         <Text style={{ fontSize: 16, fontFamily: 'MavenPro-Bold', color: '#08244B' }}>
-                            Cadastrar {type == "professor"?<>Professor</> :<>Estudante</>}
+                            Cadastrar {type == "professor"?<>Professor</> :<>Aluno</>}
                         </Text>
                     </CreateUserButton>
                     <ManageSystemLine />

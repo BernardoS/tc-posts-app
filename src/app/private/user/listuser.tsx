@@ -1,15 +1,20 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
 import UserCard from "@/components/UserCard/UserCard";
 import {
+    CreateUserButton,
     ManageSystemContainer,
-    ManageSystemContent, 
-    ManageSystemLine, 
-    ManageSystemSubTitle, 
+    ManageSystemContent,
+    ManageSystemLine,
+    ManageSystemSubTitle,
     ManageSystemTitle
 } from "@/styles/manageSystemStyle";
-import { useLocalSearchParams } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList } from "react-native";
+import { 
+    FlatList,
+    Text 
+} from "react-native";
 
 interface iUser {
     _id: string;
@@ -21,15 +26,15 @@ interface iUser {
 export default function ListUser() {
 
     const { type } = useLocalSearchParams();
-    const [users,setUsers] = useState<iUser[]>([]);
+    const [users, setUsers] = useState<iUser[]>([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         const data: iUser[] = [
             { _id: '1', name: 'Bernardo Souza Ferreira da Silva', permission: 'professor', email: 'bernardo.sfs27@gmail.com' },
             { _id: '2', name: 'João da Silva', permission: 'professor', email: 'professor@gmail.com' },
         ];
         setUsers(data);
-    },[]);
+    }, []);
 
     const renderItem = ({ item }: { item: iUser }) => {
         return (
@@ -53,6 +58,12 @@ export default function ListUser() {
                         {type == "professor" && <>Aqui você pode gerenciar os professores da plataforma, abaixo você tem a lista de todos os professores que podem gerenciar a plataforma</>}
                         {type == "student" && <>Aqui você pode gerenciar os alunos da plataforma, abaixo você tem a lista de todos os alunos que podem entrar na plataforma</>}
                     </ManageSystemSubTitle>
+                    <CreateUserButton onPress={()=>router.navigate("/private/user/saveuser")}>
+                        <FontAwesome size={18} name="user-plus"/>
+                        <Text style={{ fontSize: 16, fontFamily: 'MavenPro-Bold', color: '#08244B' }}>
+                            Cadastrar {type == "professor"?<>Professor</> :<>Estudante</>}
+                        </Text>
+                    </CreateUserButton>
                     <ManageSystemLine />
                 </ManageSystemContent>
             </ManageSystemContainer>

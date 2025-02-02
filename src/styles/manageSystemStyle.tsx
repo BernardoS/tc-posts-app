@@ -57,3 +57,18 @@ export const ManageSystemLine = styled.View`
     margin-bottom:16px;
     border-radius:10px;
 `;
+
+export const CreateUserButton = styled.TouchableOpacity`
+    background-color: #FCC918;
+    border:2px solid #08244B;
+    display:flex;
+    align-items:center;
+    flex-direction:row;
+    justify-content:center;
+    gap:8px;
+    height:48px;
+    font-weight:700;
+    border-radius:10px;
+    padding:8px 16px;
+    width:100%;
+`;

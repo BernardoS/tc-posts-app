@@ -41,16 +41,6 @@ export default function Post() {
                 <PostTitle style={{ fontFamily: 'MavenPro-Bold' }}>Geografia - O que é latitude e longitude ? </PostTitle>
                 <PostDate style={{ fontFamily: 'MavenPro-Bold' }}>Criado em: 22/11/2024</PostDate>
             </PostHeader>
-            <PostActionContainer>
-                <EditButton onPress={() => router.navigate(`/private/post/savepost?id=${id}`)} >
-                    <FontAwesome name="pencil" size={16} color="#08244B" />
-                    <Text style={{ fontFamily: 'MavenPro-Bold', color: "#08244B" }}> Editar Post</Text>
-                </EditButton>
-                <DeleteButton onPress={() => console.log("Deletar Post")} >
-                    <FontAwesome name="trash" size={16} color="#FCC918" />
-                    <Text style={{ fontFamily: 'MavenPro-Bold', color: "#FCC918" }}> Deletar Post</Text>
-                </DeleteButton>
-            </PostActionContainer>
             <PostSectionContainer>
                 <PostSectionTitle style={{ fontFamily: 'MavenPro-Bold' }} >Descrição</PostSectionTitle>
                 <Text style={{ fontFamily: 'MavenPro-Bold' }} >

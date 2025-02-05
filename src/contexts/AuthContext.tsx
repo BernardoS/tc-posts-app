@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 import { router } from "expo-router";
 import { loginWithFirebase, logoutWithFirebase } from "@/services/authentication.service"
 import { Alert } from "react-native";
+import { getUserByEmail } from "@/services/api.service";
 
 
 // Provider que gerencia o estado
@@ -20,6 +21,7 @@ interface AuthContextType {
   toggleLogin: () => void;
   setLoggedInTrue: ({ email, password }: setLoggedInTrueProps) => void;
   setLoggedInFalse: () => void;
+  permission:string;
 }
 
 // Criação do contexto
@@ -32,6 +34,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authorizationToken, setAuthorizationToken] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [permission, setPermission] = useState('');
 
   const toggleLogin = () => {
     setIsLoggedIn((prev) => !prev);
@@ -40,9 +43,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const setLoggedInTrue = async ({ email, password }: setLoggedInTrueProps) => {
     try {
       const userToken = await loginWithFirebase({ email, password });
+      const userData = await getUserByEmail({email});
       setAuthorizationToken(userToken);
       setUserEmail(userEmail);
       setIsLoggedIn(true);
+      setPermission(userData?.permission);
       router.navigate('/private');
     } catch (error) {
       Alert.alert('Erro ao realizar o login', 'Houve um erro ao autenticar suas credênciais, verifique se foram digitadas corretamente e tente novamente.', [
@@ -66,7 +71,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, toggleLogin, setLoggedInTrue, setLoggedInFalse }}>
+    <AuthContext.Provider value={{ isLoggedIn, toggleLogin, setLoggedInTrue, setLoggedInFalse, permission }}>
       {children}
     </AuthContext.Provider>
   );

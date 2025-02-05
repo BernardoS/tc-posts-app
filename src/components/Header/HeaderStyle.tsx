@@ -28,6 +28,16 @@ export const MenuButton = styled.TouchableOpacity`
     left:10%;
 `;
 
+export const LougoutButton = styled.TouchableOpacity`
+    width:64px;
+    height:40px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    position:absolute;
+    right:10%;
+`;
+
 export const LogoContainer = styled.View`
     width:100%;
     display:flex;

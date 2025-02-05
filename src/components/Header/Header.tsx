@@ -7,17 +7,22 @@ import {
     MenuButton,
     LogoHeader,
     LogoContainer,
-    ContainerLine
+    ContainerLine,
+    LougoutButton
 } from "./HeaderStyle";
 import LogoHeaderMenu from "../../assets/images/logo-header-menu.png";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Header() {
 
     const navigation = useNavigation<DrawerNavigationProp<ParamListBase>>();
 
+    const { setLoggedInFalse } = useAuth();
+
     const toggleDrawer = () => {
         navigation.toggleDrawer();
     }
+     
 
     return (
         <View>
@@ -28,6 +33,9 @@ export default function Header() {
                 <LogoContainer>
                     <LogoHeader source={LogoHeaderMenu} />
                 </LogoContainer>
+                <LougoutButton onPress={() => setLoggedInFalse()}>
+                    <FontAwesome size={20} name="sign-out" color={"#FCC918"} />
+                </LougoutButton>
             </HeaderContainer>
             <ContainerLine></ContainerLine>
         </View>

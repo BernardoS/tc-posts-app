@@ -11,7 +11,7 @@ export default function Layout() {
 
     const [fontsLoaded, setFontsLoaded] = useState(false);
 
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, permission } = useAuth();
 
     useEffect(() => {
         (async () => {
@@ -34,19 +34,19 @@ export default function Layout() {
 
     return (
         <GestureHandlerRootView style={{ flex: 1, }}>
-            <Drawer 
-                screenOptions={{ 
+            <Drawer
+                screenOptions={{
                     headerShown: false,
-                    drawerStyle:{
-                        backgroundColor:"#08244B"
+                    drawerStyle: {
+                        backgroundColor: "#08244B"
                     }
-                 }}
-                >
+                }}
+            >
                 <Drawer.Screen
                     name="index"
                     options={{
                         drawerLabel: "Página inicial",
-                        drawerLabelStyle:{color:"#FCC918"},
+                        drawerLabelStyle: { color: "#FCC918" },
                         drawerIcon: ({ size }) => <FontAwesome size={size} color="#FCC918" name="home" />,
                     }}
                 />
@@ -54,44 +54,45 @@ export default function Layout() {
                     name="professor/managesystem"
                     options={{
                         drawerLabel: "Gerenciar plataforma",
-                        drawerLabelStyle:{color:"#FCC918"},
-                        drawerIcon: ({ size }) => <FontAwesome size={size} color="#FCC918" name="cogs" />
+                        drawerLabelStyle: { color: "#FCC918" },
+                        drawerIcon: ({ size }) => <FontAwesome size={size} color="#FCC918" name="cogs" />,
+                        drawerItemStyle: (permission == "professor") ? { display: 'flex' } : { display: 'none' }
                     }}
                 />
-                 <Drawer.Screen
+                <Drawer.Screen
                     name="user/listuser"
                     options={{
-                        drawerItemStyle:{display:'none'}
+                        drawerItemStyle: { display: 'none' }
                     }}
                 />
                 <Drawer.Screen
                     name="user/saveuser"
                     options={{
-                        drawerItemStyle:{display:'none'}
+                        drawerItemStyle: { display: 'none' }
                     }}
                 />
-                 <Drawer.Screen
+                <Drawer.Screen
                     name="professor/manageuser"
                     options={{
-                        drawerItemStyle:{display:'none'}
+                        drawerItemStyle: { display: 'none' }
                     }}
                 />
                 <Drawer.Screen
                     name="post/[id]"
                     options={{
-                        drawerItemStyle:{display:'none'}
+                        drawerItemStyle: { display: 'none' }
                     }}
                 />
                 <Drawer.Screen
                     name="post/listpost"
                     options={{
-                        drawerItemStyle:{display:'none'}
+                        drawerItemStyle: { display: 'none' }
                     }}
                 />
                 <Drawer.Screen
                     name="post/savepost"
                     options={{
-                        drawerItemStyle:{display:'none'}
+                        drawerItemStyle: { display: 'none' }
                     }}
                 />
             </Drawer>

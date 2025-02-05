@@ -1,4 +1,5 @@
 import Header from "@/components/Header/Header"
+import { useAuth } from "@/contexts/AuthContext"
 import {
     ManageSystemContainer,
     ManageSystemContent,
@@ -10,11 +11,18 @@ import {
     ManageSystemTitle
 } from "@/styles/manageSystemStyle"
 import { FontAwesome } from "@expo/vector-icons"
-import { router } from "expo-router"
+import { Redirect, router } from "expo-router"
 import React from "react"
 import { Text } from "react-native"
 // Vai listar as opções adminstrativas do sistema
 export default function ManageSystem() {
+
+    const { permission } = useAuth();
+
+    if (permission != "professor") {
+        return <Redirect href="/private" />
+    }
+
     return (
         <>
             <Header />
@@ -22,19 +30,19 @@ export default function ManageSystem() {
             <ManageSystemContainer>
                 <ManageSystemContent>
                     <ManageSystemTitle style={{ fontFamily: 'MavenPro-Bold' }}>
-                        Gerenciar Plataforma 
+                        Gerenciar Plataforma
                     </ManageSystemTitle>
                     <ManageSystemSubTitle style={{ fontFamily: 'MavenPro-Bold' }}>
-                        Aqui você pode gerenciar o acesso a plataforma e os posts disponíveis, escolha abaixo a opção desejada: 
+                        Aqui você pode gerenciar o acesso a plataforma e os posts disponíveis, escolha abaixo a opção desejada:
                     </ManageSystemSubTitle>
-                    <ManageSystemLine/>
+                    <ManageSystemLine />
                     <ManageSystemOptionsContainer>
                         <ManageSystemOption onPress={() => router.navigate('/private/professor/manageuser')}>
-                            <FontAwesome size={24} color="#FCC918" name="user"/>
+                            <FontAwesome size={24} color="#FCC918" name="user" />
                             <ManageSystemOptionText style={{ fontFamily: 'MavenPro-Bold' }} >Gerenciar usuários</ManageSystemOptionText>
                         </ManageSystemOption>
                         <ManageSystemOption onPress={() => router.navigate('/private/post/listpost')}>
-                            <FontAwesome size={24} color="#FCC918" name="book"/>
+                            <FontAwesome size={24} color="#FCC918" name="book" />
                             <ManageSystemOptionText style={{ fontFamily: 'MavenPro-Bold' }}>Gerenciar posts</ManageSystemOptionText>
                         </ManageSystemOption>
                     </ManageSystemOptionsContainer>

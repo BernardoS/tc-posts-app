@@ -1,5 +1,6 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
 import UserCard from "@/components/UserCard/UserCard";
+import { useAuth } from "@/contexts/AuthContext";
 import {
     CreateUserButton,
     ManageSystemContainer,
@@ -9,7 +10,7 @@ import {
     ManageSystemTitle
 } from "@/styles/manageSystemStyle";
 import { FontAwesome } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { Redirect, router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { 
     FlatList,
@@ -27,6 +28,8 @@ export default function ListUser() {
 
     const { type } = useLocalSearchParams();
     const [users, setUsers] = useState<iUser[]>([]);
+    const { permission } = useAuth();
+
 
     useEffect(() => {
         const data: iUser[] = [
@@ -41,6 +44,10 @@ export default function ListUser() {
             <UserCard id={item._id} key={item._id} name={item.name} email={item.email} permission={item.permission} />
         );
     };
+
+    if(permission != "professor"){
+        return <Redirect href="/private"/>
+    }
 
     return (
         <>

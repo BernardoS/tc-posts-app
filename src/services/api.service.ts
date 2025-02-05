@@ -33,4 +33,18 @@ export const getUserByEmail = async ({email}:getUserByEmailParams) =>{
    
 }
 
+export const getAllPosts = async() =>{
+  try {
+    const posts:any = await api.get(`/public/posts`);
+    if(posts)
+        return posts.data;
+    
+    if(!posts)
+        return null;
+} catch (error) {
+    console.log(error);
+    throw new Error("[getAllPosts] Erro ao buscar os dados do usuário no banco de dados");
+}
+}
+
 export default api;

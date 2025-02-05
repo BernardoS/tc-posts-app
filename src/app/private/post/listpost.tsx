@@ -1,11 +1,12 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
-import Header from "@/components/Header/Header"
 import ManagePostCard from "@/components/ManagePostCard/ManagePostCard";
 import { useAuth } from "@/contexts/AuthContext";
+import { getAllPosts } from "@/services/api.service";
 import { ManageSystemContainer, ManageSystemContent, ManageSystemLine, ManageSystemSubTitle, ManageSystemTitle } from "@/styles/manageSystemStyle"
 import { Redirect } from "expo-router";
-import React from "react";
-import { FlatList, Text, View } from "react-native"
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback, useState } from "react";
+import { FlatList, View } from "react-native"
 
 
 interface iPost {
@@ -23,15 +24,24 @@ interface iPost {
 export default function ListPost() {
 
     const { permission } = useAuth();
+    const [postList, setPostList] = useState<iPost[]>()
 
     if (permission != "professor") {
         return <Redirect href="/private" />
     }
 
-    const data: iPost[] = [
-        { _id: '1', title: 'Geografia - O que é latitude e longitude?', description: 'Descubra como a latitude e a longitude ajudam a localizar qualquer ponto no planeta e sua importância para a navegação e os sistemas de GPS' },
-        { _id: '2', title: 'Geografia - O que é latitude e longitude?', description: 'Descubra como a latitude e a longitude ajudam a localizar qualquer ponto no planeta e sua importância para a navegação e os sistemas de GPS' },
-    ];
+    useFocusEffect(()=>{
+        getPosts();
+    });
+
+
+    const getPosts = async () => {
+
+        const data = await getAllPosts();
+
+        setPostList(data)
+    }
+
 
     const renderItem = ({ item }: { item: iPost }) => {
         return (
@@ -47,7 +57,7 @@ export default function ListPost() {
             <ManageSystemContainer>
                 <ManageSystemContent>
                     <ManageSystemTitle style={{ fontFamily: 'MavenPro-Bold' }}>
-                        Gerenciar Plataforma
+                        Gerenciar Posts
                     </ManageSystemTitle>
                     <ManageSystemSubTitle style={{ fontFamily: 'MavenPro-Bold' }}>
                         Aqui você pode gerenciar os posts da plataforma.
@@ -58,7 +68,7 @@ export default function ListPost() {
 
 
             <FlatList
-                data={data}
+                data={postList}
                 renderItem={renderItem}
                 keyExtractor={(item: { _id: string }) => item._id}
                 style={{ padding: 10 }}

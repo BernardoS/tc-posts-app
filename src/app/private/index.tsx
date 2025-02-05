@@ -1,5 +1,6 @@
 import Header from "@/components/Header/Header";
 import PostCard from "@/components/PostCard/PostCard";
+import { getAllPosts } from "@/services/api.service";
 import {
     PostListSubTitle,
     PostListTitle,
@@ -8,7 +9,8 @@ import {
     SearchInputText
 } from "@/styles/indexStyles";
 import { FontAwesome } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
+import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 
@@ -31,8 +33,22 @@ export default function Search() {
 
     const [searchTerm, setSearchTerm] = useState('');
 
+    const [postList,setPostList] = useState<iPost[]>();
+
     const handleSearch = () => {
         console.log("Pesquisa realizada com o termo:" + searchTerm)
+    }
+
+    useFocusEffect(()=>{
+        getPosts();
+    });
+
+
+    const getPosts = async() =>{
+        
+        const data = await getAllPosts();
+
+        setPostList(data)
     }
 
     useEffect(() => {
@@ -41,10 +57,7 @@ export default function Search() {
         }
     }, [searchParams]);
 
-    const data: iPost[] = [
-        { _id: '1', title: 'Geografia - O que é latitude e longitude?', description: 'Descubra como a latitude e a longitude ajudam a localizar qualquer ponto no planeta e sua importância para a navegação e os sistemas de GPS' },
-        { _id: '2', title: 'Geografia - O que é latitude e longitude?', description: 'Descubra como a latitude e a longitude ajudam a localizar qualquer ponto no planeta e sua importância para a navegação e os sistemas de GPS' },
-    ];
+    
 
     const renderItem = ({ item }: { item: iPost }) => {
         return (
@@ -74,7 +87,7 @@ export default function Search() {
             </SearchInputContainer>
 
             <FlatList
-                data={data}
+                data={postList}
                 renderItem={renderItem}
                 keyExtractor={(item: { _id: string }) => item._id}
                 style={{ padding: 10 }}

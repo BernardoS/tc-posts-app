@@ -10,7 +10,7 @@ export const PostCardContainer = styled.TouchableOpacity`
     display:flex;
     align-items:center;
     flex-direction:row;
-    margin-bottom:8px;
+    margin-bottom:16px;
     padding-bottom:16px;
 `;
 

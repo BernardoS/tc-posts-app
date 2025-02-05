@@ -2,7 +2,6 @@ import styled from "styled-components/native";
 
 export const PostCardContainer = styled.TouchableOpacity`
     width: 100%;
-    aspect-ratio:2.5/1;
     border-radius: 12px;
     overflow: hidden;
     background-color: #1E4071;
@@ -11,7 +10,8 @@ export const PostCardContainer = styled.TouchableOpacity`
     display:flex;
     align-items:center;
     flex-direction:row;
-    margin-bottom:8px;
+    padding-bottom:8px;
+    margin-bottom:16px;
 `;
 
 export const PostCardImage = styled.Image`

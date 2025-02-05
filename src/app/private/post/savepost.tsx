@@ -1,4 +1,5 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader"
+import { useAuth } from "@/contexts/AuthContext";
 import {
     DeleteButton,
     InputLabel,
@@ -11,7 +12,7 @@ import {
     SmallInput
 } from "@/styles/savePostStyles";
 import { FontAwesome } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { Redirect, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler"
@@ -31,6 +32,12 @@ interface iPost {
 
 
 export default function SavePost() {
+
+    const { permission } = useAuth();
+
+    if (permission != "professor") {
+        return <Redirect href="/private" />
+    }
 
     const { id } = useLocalSearchParams();
 

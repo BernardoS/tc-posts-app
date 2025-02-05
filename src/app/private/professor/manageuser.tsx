@@ -1,5 +1,5 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader"
-import Header from "@/components/Header/Header"
+import { useAuth } from "@/contexts/AuthContext"
 import {
     ManageSystemContainer,
     ManageSystemContent,
@@ -10,12 +10,19 @@ import {
     ManageSystemSubTitle,
     ManageSystemTitle
 } from "@/styles/manageSystemStyle"
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"
-import { router } from "expo-router"
+import { FontAwesome5 } from "@expo/vector-icons"
+import { Redirect, router } from "expo-router"
 import React from "react"
 
 // Vai listar as opções adminstrativas do sistema
 export default function ManageUser() {
+
+     const { permission } = useAuth();
+    
+        if (permission != "professor") {
+            return <Redirect href="/private" />
+        }
+
     return (
         <>
            <CloseableHeader onCloseRoute="/private/professor/managesystem">

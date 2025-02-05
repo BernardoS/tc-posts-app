@@ -1,20 +1,27 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
 import { DeleteButton, InputLabel, SaveButton, SaveUserContent, SaveUserFooter, SaveUserLine, SmallInput, SmallInputContainer } from "@/styles/saveUserStyles";
 import { FontAwesome } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { Redirect, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { Text } from "react-native"
 import { ScrollView } from "react-native-gesture-handler";
 import { Picker } from '@react-native-picker/picker';
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function SaveUser() {
 
     const { id, type } = useLocalSearchParams();
 
     const [name, setName] = useState('');
-    const [permission, setPermission] = useState('');
+    const [userPermission, setUserPermission] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassoword] = useState('');
+    const { permission } = useAuth();
+
+
+    if (permission != "professor") {
+        return <Redirect href="/private" />
+    }
 
     return (
         <ScrollView>
@@ -30,19 +37,19 @@ export default function SaveUser() {
                     placeholder="Digite o nome do usuário" />
                 <InputLabel style={{ fontFamily: 'MavenPro-Bold' }}>Tipo do usuário</InputLabel>
                 <SmallInputContainer>
-                <Picker
-                    style={{
-                        width:'100%',
-                    }}
-                    selectedValue={permission}
-                    onValueChange={(itemValue, itemIndex) =>
-                        setPermission(itemValue)
-                    }>
-                    <Picker.Item label="Aluno" value="student" />
-                    <Picker.Item label="Professor" value="professor" />
-                </Picker>
+                    <Picker
+                        style={{
+                            width: '100%',
+                        }}
+                        selectedValue={userPermission}
+                        onValueChange={(itemValue, itemIndex) =>
+                            setUserPermission(itemValue)
+                        }>
+                        <Picker.Item label="Aluno" value="student" />
+                        <Picker.Item label="Professor" value="professor" />
+                    </Picker>
                 </SmallInputContainer>
-            
+
                 {!id && (
                     <>
                         <InputLabel style={{ fontFamily: 'MavenPro-Bold' }}>E-mail</InputLabel>

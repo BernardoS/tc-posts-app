@@ -3,10 +3,12 @@ import ManagePostCard from "@/components/ManagePostCard/ManagePostCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { getAllPosts } from "@/services/api.service";
 import { ManageSystemContainer, ManageSystemContent, ManageSystemLine, ManageSystemSubTitle, ManageSystemTitle } from "@/styles/manageSystemStyle"
-import { Redirect } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useState } from "react";
-import { FlatList, View } from "react-native"
+import React, { useState } from "react";
+import { FlatList, View,Text } from "react-native"
+import { CreatePostButton } from "@/styles/savePostStyles";
+import { FontAwesome } from "@expo/vector-icons";
 
 
 interface iPost {
@@ -62,6 +64,12 @@ export default function ListPost() {
                     <ManageSystemSubTitle style={{ fontFamily: 'MavenPro-Bold' }}>
                         Aqui você pode gerenciar os posts da plataforma.
                     </ManageSystemSubTitle>
+                    <CreatePostButton onPress={()=>router.navigate(`/private/post/savepost`)}>
+                        <FontAwesome size={18} name="book"/>
+                        <Text style={{ fontSize: 16, fontFamily: 'MavenPro-Bold', color: '#08244B' }}>
+                            Cadastrar Post
+                        </Text>
+                    </CreatePostButton>
                     <ManageSystemLine />
                 </ManageSystemContent>
             </ManageSystemContainer>

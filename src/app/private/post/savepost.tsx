@@ -1,5 +1,6 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader"
 import { useAuth } from "@/contexts/AuthContext";
+import { getPostById } from "@/services/api.service";
 import {
     DeleteButton,
     InputLabel,
@@ -12,22 +13,17 @@ import {
     SmallInput
 } from "@/styles/savePostStyles";
 import { FontAwesome } from "@expo/vector-icons";
-import { Redirect, useLocalSearchParams } from "expo-router";
+import { Redirect, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler"
 
 
-interface iPost {
-    _id: string;
+interface iPostData {
     title: string;
     description: string;
     content: string;
     author: string;
-    modifyDate: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
 }
 
 
@@ -45,6 +41,31 @@ export default function SavePost() {
     const [description, setDescription] = useState('');
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
+    const [postData,setPostData] = useState<iPostData>();
+
+    useFocusEffect(() => {
+        if (id) {
+            getPostData(id.toString());
+        }else{
+            cleanPostData()
+        }
+    });
+
+    const getPostData = async (id: string) => {
+        const postData = await getPostById({ id });
+        setTitle(postData.title);
+        setDescription(postData.description);
+        setContent(postData.content);
+        setAuthor(postData.author);
+    }
+
+    const cleanPostData = () =>{
+        setTitle('');
+        setDescription('');
+        setAuthor('');
+        setContent('');
+    }
+
 
     return (
         <ScrollView>
@@ -72,12 +93,12 @@ export default function SavePost() {
                     style={{
                         textAlignVertical: 'top'
                     }}
-                    value={description}
+                    value={content}
                     onChangeText={setDescription}
                     placeholder="Digite o conteúdo" />
                 <InputLabel style={{ fontFamily: 'MavenPro-Bold' }}>Autor</InputLabel>
                 <SmallInput
-                    value={title}
+                    value={author}
                     onChangeText={setTitle}
                     placeholder="Digite aqui o nome do autor" />
                 <SavePostLine />

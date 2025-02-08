@@ -152,7 +152,7 @@ interface getUserByIdParams {
   id: string
 }
 
-export const getUserById = async ({ id }: getPostByIdParams) => {
+export const getUserById = async ({ id }: getUserByIdParams) => {
   try {
     const user: any = await api.get(`/private/user/${id}`);
     if (user)
@@ -198,7 +198,7 @@ interface createUserParams {
 export const createUser = async (user: createUserParams) => {
   try {
     await api.post(`/private/user`, {
-      "email":user.email,
+      "email": user.email,
       "password": user.password,
       "permission": user.permission,
       "name": user.name
@@ -206,6 +206,19 @@ export const createUser = async (user: createUserParams) => {
   } catch (error) {
     console.log(error);
     throw new Error("[createUser] Erro ao salvar os dados do usuário no banco de dados");
+  }
+}
+
+interface deleteUserByIdParams {
+  id: string
+}
+
+export const deleteUserById = async ({ id }: deleteUserByIdParams) => {
+  try {
+    await api.delete(`/private/user/${id}`);
+  } catch (error) {
+    console.log(error);
+    throw new Error("[deleteUserById] Erro ao deletar os dados do post no banco de dados");
   }
 }
 

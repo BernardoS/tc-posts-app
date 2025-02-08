@@ -1,7 +1,7 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
 import UserCard from "@/components/UserCard/UserCard";
 import { useAuth } from "@/contexts/AuthContext";
-import { getProfessors, getStudents } from "@/services/api.service";
+import { deleteUserById, getProfessors, getStudents } from "@/services/api.service";
 import {
     CreateUserButton,
     ManageSystemContainer,
@@ -59,9 +59,14 @@ export default function ListUser() {
         }
     }
 
+    const deleteUser = async (id: string) => {
+        await deleteUserById({ id });
+        await inicializaPagina();
+    }
+
     const renderItem = ({ item }: { item: iUser }) => {
         return (
-            <UserCard id={item._id} key={item._id} name={item.name} email={item.email} permission={item.permission} />
+            <UserCard id={item._id} key={item._id} name={item.name} email={item.email} permission={item.permission} handleDeleteFunction={deleteUser} />
         );
     };
 

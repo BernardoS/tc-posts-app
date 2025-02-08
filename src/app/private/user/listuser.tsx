@@ -1,6 +1,7 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
 import UserCard from "@/components/UserCard/UserCard";
 import { useAuth } from "@/contexts/AuthContext";
+import { deleteUserById, getProfessors, getStudents } from "@/services/api.service";
 import {
     CreateUserButton,
     ManageSystemContainer,
@@ -10,11 +11,12 @@ import {
     ManageSystemTitle
 } from "@/styles/manageSystemStyle";
 import { FontAwesome } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 import { Redirect, router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { 
+import React, { useCallback, useEffect, useState } from "react";
+import {
     FlatList,
-    Text 
+    Text
 } from "react-native";
 
 interface iUser {
@@ -31,22 +33,45 @@ export default function ListUser() {
     const { permission } = useAuth();
 
 
-    useEffect(() => {
-        const data: iUser[] = [
-            { _id: '1', name: 'Bernardo Souza Ferreira da Silva', permission: 'professor', email: 'bernardo.sfs27@gmail.com' },
-            { _id: '2', name: 'João da Silva', permission: 'professor', email: 'professor@gmail.com' },
-        ];
-        setUsers(data);
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            inicializaPagina();
+        }, [type])
+    );
+
+    const inicializaPagina = async () => {
+        if (type) {
+            switch (type) {
+                case "professor":
+                    const professors = await getProfessors();
+                    setUsers(professors);
+                    break;
+                case "student":
+                    const students = await getStudents();
+                    setUsers(students);
+                    break;
+                default:
+                    router.navigate("/private");
+                    break;
+            }
+        } else {
+            router.navigate("/private")
+        }
+    }
+
+    const deleteUser = async (id: string) => {
+        await deleteUserById({ id });
+        await inicializaPagina();
+    }
 
     const renderItem = ({ item }: { item: iUser }) => {
         return (
-            <UserCard id={item._id} key={item._id} name={item.name} email={item.email} permission={item.permission} />
+            <UserCard id={item._id} key={item._id} name={item.name} email={item.email} permission={item.permission} handleDeleteFunction={deleteUser} />
         );
     };
 
-    if(permission != "professor"){
-        return <Redirect href="/private"/>
+    if (permission != "professor") {
+        return <Redirect href="/private" />
     }
 
     return (
@@ -65,10 +90,10 @@ export default function ListUser() {
                         {type == "professor" && <>Aqui você pode gerenciar os professores da plataforma, abaixo você tem a lista de todos os professores que podem gerenciar a plataforma</>}
                         {type == "student" && <>Aqui você pode gerenciar os alunos da plataforma, abaixo você tem a lista de todos os alunos que podem entrar na plataforma</>}
                     </ManageSystemSubTitle>
-                    <CreateUserButton onPress={()=>router.navigate(`/private/user/saveuser?type=${type}`)}>
-                        <FontAwesome size={18} name="user-plus"/>
+                    <CreateUserButton onPress={() => router.navigate(`/private/user/saveuser?type=${type}`)}>
+                        <FontAwesome size={18} name="user-plus" />
                         <Text style={{ fontSize: 16, fontFamily: 'MavenPro-Bold', color: '#08244B' }}>
-                            Cadastrar {type == "professor"?<>Professor</> :<>Aluno</>}
+                            Cadastrar {type == "professor" ? <>Professor</> : <>Aluno</>}
                         </Text>
                     </CreateUserButton>
                     <ManageSystemLine />

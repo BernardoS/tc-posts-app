@@ -34,7 +34,7 @@ export default function ListPost() {
 
     useFocusEffect(
         useCallback(() => {
-            getPosts()
+            getPosts();
         }, [])
     );
 

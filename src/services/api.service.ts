@@ -112,10 +112,39 @@ interface savePostParams {
 
 export const createPost = async (post:savePostParams) =>{
   try {
-    await api.post(`/private/posts/`,post);
+    await api.post(`/private/posts`,post);
   } catch (error) {
     console.log(error);
     throw new Error("[deletePostById] Erro ao deletar os dados do post no banco de dados");
+  }
+}
+
+
+export const getProfessors = async () =>{
+  try {
+    const users: any = await api.get(`/private/user/professors`);
+    if (users)
+      return users.data;
+
+    if (!users)
+      return null;
+  } catch (error) {
+    console.log(error);
+    throw new Error("[getProfessors] Erro ao buscar os dados do usuário no banco de dados");
+  }
+}
+
+export const getStudents = async () =>{
+  try {
+    const users: any = await api.get(`/private/user/students`);
+    if (users)
+      return users.data;
+
+    if (!users)
+      return null;
+  } catch (error) {
+    console.log(error);
+    throw new Error("[getStudents] Erro ao buscar os dados do usuário no banco de dados");
   }
 }
 

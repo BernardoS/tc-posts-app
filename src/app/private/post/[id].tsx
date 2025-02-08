@@ -1,22 +1,20 @@
-import { DeleteButton, EditButton, PostActionContainer, PostDate, PostHeader, PostSectionContainer, PostSectionTitle, PostTitle } from "@/styles/postStyles";
+import { AuthorLabel, DeleteButton, EditButton, PostActionContainer, PostDate, PostHeader, PostSectionContainer, PostSectionTitle, PostTitle } from "@/styles/postStyles";
 import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native";
 import GenericPostCover from "../../../assets/images/generic-post-cover.png";
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
 import { FontAwesome } from "@expo/vector-icons";
+import { getPostById } from "@/services/api.service";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface iPost {
-    _id: string;
     title: string;
     description: string;
     content: string;
     author: string;
-    modifyDate: string;
     createdAt: string;
-    updatedAt: string;
-    __v: number;
 }
 
 export default function Post() {
@@ -24,13 +22,43 @@ export default function Post() {
     const { id } = useLocalSearchParams();
     const [postData, setPostData] = useState<iPost>();
 
-    /*useEffect(()=>{
-        axios.get(`http://localhost:3000/posts/${id}`).then(response => {
-            setPostData(response.data);
-          }).catch(error => {
-            console.error('Error fetching post:', error);
-          });
-    },[id])*/
+    useFocusEffect(
+        useCallback(() => {
+            inicializaPagina();
+        }, [id])
+    );
+
+    const inicializaPagina = () => {
+        if (id) {
+            getPostData(id.toString());
+        } else {
+            router.navigate("/private")
+        }
+    }
+
+    const getPostData = async (id: string) => {
+        const postData = await getPostById({ id });
+
+        setPostData({
+            title: postData.title,
+            author: postData.author,
+            content: postData.content,
+            createdAt: postData.createdAt,
+            description: postData.description
+        });
+
+    }
+
+    const formatarData = (dataString: string | undefined): string => {
+        if (!dataString)
+            return ""
+
+        const data = new Date(dataString);
+        const dia = data.getDay().toString().padStart(2, '0');
+        const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+        const ano = data.getFullYear().toString();
+        return `${dia}/${mes}/${ano}`;
+    }
 
     return (
         <ScrollView>
@@ -38,27 +66,25 @@ export default function Post() {
                 Post
             </CloseableHeader>
             <PostHeader source={GenericPostCover} reziseMode="cover" >
-                <PostTitle style={{ fontFamily: 'MavenPro-Bold' }}>Geografia - O que é latitude e longitude ? </PostTitle>
-                <PostDate style={{ fontFamily: 'MavenPro-Bold' }}>Criado em: 22/11/2024</PostDate>
+                <PostTitle style={{ fontFamily: 'MavenPro-Bold' }}>{postData?.title} </PostTitle>
+                <PostDate style={{ fontFamily: 'MavenPro-Bold' }}>Criado em: {formatarData(postData?.createdAt)}</PostDate>
             </PostHeader>
             <PostSectionContainer>
                 <PostSectionTitle style={{ fontFamily: 'MavenPro-Bold' }} >Descrição</PostSectionTitle>
                 <Text style={{ fontFamily: 'MavenPro-Bold' }} >
-                    Mussum Ipsum, cacilds vidis litro abertis. Admodum accumsan disputationi eu sit. Vide electram sadipscing et per. Cevadis im ampola pa arma uma pindureta. Negão é teu passadis, eu sou faxa pretis. Não sou faixa preta cumpadi, sou preto inteiris, inteiris.
+                    {postData?.description}
                 </Text>
             </PostSectionContainer>
             <PostSectionContainer>
                 <PostSectionTitle style={{ fontFamily: 'MavenPro-Bold' }} >Conteúdo</PostSectionTitle>
                 <Text style={{ fontFamily: 'MavenPro-Bold' }} >
-                    Mussum Ipsum, cacilds vidis litro abeMmrtis.  Casamentiss faiz malandris se pirulitá. Sapien in monti palavris qui num significa nadis i pareci latim. Aenean aliquam molestie leo, vitae iaculis nisl. Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.
-
-                    Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum. Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio. Interagi no mé, cursus quis, vehicula ac nisi.
-
-                    Quem manda na minha terra sou euzis! Praesent malesuada urna nisi, quis volutpat erat hendrerit non. Nam vulputate dapibus. Bota 1 metro de cachacis aí pra viagem! Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl.
-
-                    Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Quem num gosta di mim que vai caçá sua turmis! Delegadis gente finis, bibendum egestas augue arcu ut est.
+                    {postData?.content}
                 </Text>
+                <AuthorLabel style={{ fontFamily: 'MavenPro-Bold' }}>
+                    Escrito por: {postData?.author}
+                </AuthorLabel>
             </PostSectionContainer>
+
         </ScrollView>
     );
 }

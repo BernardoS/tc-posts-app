@@ -5,8 +5,8 @@ import { getAllPosts } from "@/services/api.service";
 import { ManageSystemContainer, ManageSystemContent, ManageSystemLine, ManageSystemSubTitle, ManageSystemTitle } from "@/styles/manageSystemStyle"
 import { Redirect, router } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useState } from "react";
-import { FlatList, View,Text } from "react-native"
+import React, { useCallback, useState } from "react";
+import { FlatList, View, Text } from "react-native"
 import { CreatePostButton } from "@/styles/savePostStyles";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -32,9 +32,12 @@ export default function ListPost() {
         return <Redirect href="/private" />
     }
 
-    useFocusEffect(()=>{
-        getPosts();
-    });
+    useFocusEffect(
+        useCallback(() => {
+            getPosts()
+        }, [])
+    );
+
 
 
     const getPosts = async () => {
@@ -64,8 +67,8 @@ export default function ListPost() {
                     <ManageSystemSubTitle style={{ fontFamily: 'MavenPro-Bold' }}>
                         Aqui você pode gerenciar os posts da plataforma.
                     </ManageSystemSubTitle>
-                    <CreatePostButton onPress={()=>router.navigate(`/private/post/savepost`)}>
-                        <FontAwesome size={18} name="book"/>
+                    <CreatePostButton onPress={() => router.navigate(`/private/post/savepost`)}>
+                        <FontAwesome size={18} name="book" />
                         <Text style={{ fontSize: 16, fontFamily: 'MavenPro-Bold', color: '#08244B' }}>
                             Cadastrar Post
                         </Text>

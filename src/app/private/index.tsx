@@ -10,8 +10,8 @@ import {
 } from "@/styles/indexStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
-import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 
 
@@ -30,26 +30,21 @@ interface iPost {
 export default function Search() {
 
     const searchParams = useLocalSearchParams();
+    
+    const navigation = useNavigation();
 
     const [searchTerm, setSearchTerm] = useState('');
 
-    const [postList,setPostList] = useState<iPost[]>();
+    const [postList, setPostList] = useState<iPost[]>();
 
     const handleSearch = () => {
         console.log("Pesquisa realizada com o termo:" + searchTerm)
     }
 
-    useFocusEffect(()=>{
-        getPosts();
-    });
-
-
-    const getPosts = async() =>{
-        
-        const data = await getAllPosts();
-
-        setPostList(data)
-    }
+    useEffect(() => {
+        const unsubscribe = navigation.addListener("focus", ()=>getPosts());
+        return unsubscribe;
+    }, [navigation]);
 
     useEffect(() => {
         if (searchParams.term != null && searchParams.term != "" && searchParams != undefined) {
@@ -57,7 +52,21 @@ export default function Search() {
         }
     }, [searchParams]);
 
+    useEffect(()=>{
+        getPosts();
+    },[])
+
+
+    const getPosts = async () => {
+
+        const data = await getAllPosts();
+
+        setPostList(data)
+    }
+
     
+
+
 
     const renderItem = ({ item }: { item: iPost }) => {
         return (

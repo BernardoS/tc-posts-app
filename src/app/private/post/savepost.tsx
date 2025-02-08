@@ -14,7 +14,7 @@ import {
 } from "@/styles/savePostStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import { Redirect, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler"
 
@@ -41,15 +41,20 @@ export default function SavePost() {
     const [description, setDescription] = useState('');
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
-    const [postData,setPostData] = useState<iPostData>();
 
-    useFocusEffect(() => {
+    useFocusEffect(
+        useCallback(() => {
+            inicializaPagina();
+        }, [id])
+    );
+
+    const inicializaPagina = () => {
         if (id) {
             getPostData(id.toString());
-        }else{
-            cleanPostData()
+        } else {
+            cleanPostData();
         }
-    });
+    }
 
     const getPostData = async (id: string) => {
         const postData = await getPostById({ id });
@@ -59,12 +64,33 @@ export default function SavePost() {
         setAuthor(postData.author);
     }
 
-    const cleanPostData = () =>{
+    const cleanPostData = () => {
         setTitle('');
         setDescription('');
         setAuthor('');
         setContent('');
     }
+
+    var validatePost = ({ title, author, content, description }: iPostData): boolean => {
+        return false
+    }
+
+    const handleSavePost = () => {
+
+        const postToSave: iPostData = {
+            title: '',
+            author: '',
+            content: '',
+            description: ''
+        }
+
+        var postIsValid: boolean = validatePost(postToSave);
+
+        if (postIsValid) {
+            // salva o post
+        }
+    }
+
 
 
     return (

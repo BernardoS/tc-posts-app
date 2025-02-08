@@ -74,7 +74,7 @@ export default function SavePost() {
     const deletePost = async (id: string | undefined) => {
         if (id) {
             await deletePostById({ id });
-            router.navigate('private/post/listpost');
+            router.navigate('/private/post/listpost');
         } else {
             Alert.alert("Ops... Alguma coisa aconteceu", "Não foi possível deletar o item, tente novamente mais tarde");
         }
@@ -99,10 +99,10 @@ export default function SavePost() {
         try {
             if(id){
                 await updatePostById({id,author,content,description,title});
-                router.navigate('private/post/listpost');
+                router.navigate('/private/post/listpost');
             }else{
                 await createPost({author,content,description,title});
-                router.navigate('private/post/listpost');
+                router.navigate('/private/post/listpost');
             }
         } catch (error) {
             Alert.alert("Ops... Alguma coisa aconteceu", "Não foi possível salvar o item, tente novamente mais tarde");

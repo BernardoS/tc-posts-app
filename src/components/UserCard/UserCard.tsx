@@ -45,7 +45,7 @@ const UserCard: React.FC<UserCardProps> = ({ id, name, email, permission }) => {
     }
 
     return (
-        <UserCardContainer id={id} onPress={() => router.navigate(`/private/user/saveuser?id=${id}&type=${permission}`)} >
+        <UserCardContainer id={id} >
             <UserCardIconContainer>
                 <FontAwesome5 size={24} color="#FCC918" name={permission == "professor" ? "user-tie" : "user-graduate"} />
             </UserCardIconContainer>
@@ -65,7 +65,7 @@ const UserCard: React.FC<UserCardProps> = ({ id, name, email, permission }) => {
                             Apagar
                         </Text>
                     </DeleteButton>
-                    <EditButton>
+                    <EditButton onPress={() => router.navigate(`/private/user/saveuser?id=${id}&type=${permission}`)}>
                         <FontAwesome name="pencil" size={16} color="#08244B" />
                         <Text style={{ fontFamily: 'MavenPro-Bold', color: '#08244B' }}>
                             Editar

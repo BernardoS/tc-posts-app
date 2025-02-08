@@ -1,6 +1,6 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader"
 import { useAuth } from "@/contexts/AuthContext";
-import { deletePostById, getPostById } from "@/services/api.service";
+import { createPost, deletePostById, getPostById, updatePostById } from "@/services/api.service";
 import {
     DeleteButton,
     InputLabel,
@@ -78,31 +78,48 @@ export default function SavePost() {
         } else {
             Alert.alert("Ops... Alguma coisa aconteceu", "Não foi possível deletar o item, tente novamente mais tarde");
         }
-
     }
 
-
-    var validatePost = ({ title, author, content, description }: iPostData): boolean => {
-        return false
-    }
-
-    const handleSavePost = () => {
+    const savePost = async (id:string|undefined) =>{
 
         const postToSave: iPostData = {
-            title: '',
-            author: '',
-            content: '',
-            description: ''
+            title: title,
+            author: author,
+            content: content,
+            description: description
         }
 
         var postIsValid: boolean = validatePost(postToSave);
 
-        if (postIsValid) {
-            // salva o post
+        if (!postIsValid){
+            Alert.alert("Dados inválidos", "Por favor, insira os dados do post corretamente, preencha todos os campos.");
+            return;
+        }
+
+        try {
+            if(id){
+                await updatePostById({id,author,content,description,title});
+                router.navigate('private/post/listpost');
+            }else{
+                await createPost({author,content,description,title});
+                router.navigate('private/post/listpost');
+            }
+        } catch (error) {
+            Alert.alert("Ops... Alguma coisa aconteceu", "Não foi possível salvar o item, tente novamente mais tarde");
+            return;
         }
     }
 
 
+    var validatePost = ({ title, author, content, description }: iPostData): boolean => {
+        if(!title || !author || !content || !description )
+            return false;
+
+        if(title == '' || author == '' || content == '' || description == '')
+            return false;
+
+        return true;
+    }
 
     return (
         <ScrollView>
@@ -131,18 +148,18 @@ export default function SavePost() {
                         textAlignVertical: 'top'
                     }}
                     value={content}
-                    onChangeText={setDescription}
+                    onChangeText={setContent}
                     placeholder="Digite o conteúdo" />
                 <InputLabel style={{ fontFamily: 'MavenPro-Bold' }}>Autor</InputLabel>
                 <SmallInput
                     value={author}
-                    onChangeText={setTitle}
+                    onChangeText={setAuthor}
                     placeholder="Digite aqui o nome do autor" />
                 <SavePostLine />
             </SavePostContent>
             <SavePostFooter>
                 {id && (
-                    <DeleteButton onPress={()=> deletePost(id)} >
+                    <DeleteButton onPress={()=> deletePost(id.toString())} >
                         <Text style={{ fontFamily: 'MavenPro-Bold', color: "#FCC918" }} >Apagar</Text>
                         <FontAwesome
                             name="trash"
@@ -151,7 +168,7 @@ export default function SavePost() {
                         />
                     </DeleteButton>
                 )}
-                <SaveButton>
+                <SaveButton onPress={() => savePost(id?.toString())}>
                     <Text style={{ fontFamily: 'MavenPro-Bold', color: "#08244B" }} >Salvar</Text>
                     <FontAwesome
                         name="save"

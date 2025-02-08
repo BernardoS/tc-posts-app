@@ -34,12 +34,11 @@ const ManagePostCard: React.FC<PostCardProps> = ({ id, coverImage, title, descri
     }
 
     function deleteItem(){
-        console.log("Chegou aqui");
-        /*if(id){
+        if(id){
             handleDeleteFunction(id);
         }else{
             Alert.alert("Ops... Alguma coisa aconteceu","Não foi possível deletar o item, tente novamente mais tarde");
-        }*/
+        }
     }
 
     function reduzirTexto(texto?:string, limite?:number) {

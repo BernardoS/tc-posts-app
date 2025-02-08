@@ -80,4 +80,44 @@ export const deletePostById = async ({id}:deletePostByIdParams) => {
   }
 }
 
+interface updatePostByIdParams {
+  id:string;
+  title: string;
+  description: string;
+  content: string;
+  author: string;
+}
+
+export const updatePostById = async (post:updatePostByIdParams) => {
+  try {
+    await api.put(`/private/posts/${post.id}`,{
+      "title": post.title,
+      "content": post.content,
+      "description": post.description,
+      "author": post.author
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error("[updatePostById] Erro ao deletar os dados do post no banco de dados");
+  }
+}
+
+
+interface savePostParams {
+  title: string;
+  description: string;
+  content: string;
+  author: string;
+}
+
+export const createPost = async (post:savePostParams) =>{
+  try {
+    await api.post(`/private/posts/`,post);
+  } catch (error) {
+    console.log(error);
+    throw new Error("[deletePostById] Erro ao deletar os dados do post no banco de dados");
+  }
+}
+
+
 export default api;

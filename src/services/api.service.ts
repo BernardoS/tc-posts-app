@@ -62,7 +62,21 @@ export const getPostById = async ({id}:getPostByIdParams) => {
       return null;
   } catch (error) {
     console.log(error);
-    throw new Error("[getAllPosts] Erro ao buscar os dados do usuário no banco de dados");
+    throw new Error("[getPostById] Erro ao buscar os dados do post no banco de dados");
+  }
+}
+
+
+interface deletePostByIdParams{
+  id:string;
+}
+
+export const deletePostById = async ({id}:deletePostByIdParams) => {
+  try {
+    await api.delete(`/private/posts/${id}`);
+  } catch (error) {
+    console.log(error);
+    throw new Error("[deletePostById] Erro ao deletar os dados do post no banco de dados");
   }
 }
 

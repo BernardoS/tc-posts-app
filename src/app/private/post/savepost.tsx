@@ -1,6 +1,6 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader"
 import { useAuth } from "@/contexts/AuthContext";
-import { getPostById } from "@/services/api.service";
+import { deletePostById, getPostById } from "@/services/api.service";
 import {
     DeleteButton,
     InputLabel,
@@ -13,9 +13,9 @@ import {
     SmallInput
 } from "@/styles/savePostStyles";
 import { FontAwesome } from "@expo/vector-icons";
-import { Redirect, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { Redirect, router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
-import { Text } from "react-native";
+import { Alert, Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler"
 
 
@@ -70,6 +70,17 @@ export default function SavePost() {
         setAuthor('');
         setContent('');
     }
+
+    const deletePost = async (id: string | undefined) => {
+        if (id) {
+            await deletePostById({ id });
+            router.navigate('private/post/listpost');
+        } else {
+            Alert.alert("Ops... Alguma coisa aconteceu", "Não foi possível deletar o item, tente novamente mais tarde");
+        }
+
+    }
+
 
     var validatePost = ({ title, author, content, description }: iPostData): boolean => {
         return false
@@ -131,7 +142,7 @@ export default function SavePost() {
             </SavePostContent>
             <SavePostFooter>
                 {id && (
-                    <DeleteButton  >
+                    <DeleteButton onPress={()=> deletePost(id)} >
                         <Text style={{ fontFamily: 'MavenPro-Bold', color: "#FCC918" }} >Apagar</Text>
                         <FontAwesome
                             name="trash"

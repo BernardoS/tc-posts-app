@@ -1,12 +1,12 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
 import ManagePostCard from "@/components/ManagePostCard/ManagePostCard";
 import { useAuth } from "@/contexts/AuthContext";
-import { getAllPosts } from "@/services/api.service";
+import { deletePostById, getAllPosts } from "@/services/api.service";
 import { ManageSystemContainer, ManageSystemContent, ManageSystemLine, ManageSystemSubTitle, ManageSystemTitle } from "@/styles/manageSystemStyle"
 import { Redirect, router } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import { FlatList, View, Text } from "react-native"
+import { FlatList, View, Text, Alert } from "react-native"
 import { CreatePostButton } from "@/styles/savePostStyles";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -38,19 +38,21 @@ export default function ListPost() {
         }, [])
     );
 
-
-
     const getPosts = async () => {
-
         const data = await getAllPosts();
 
         setPostList(data)
     }
 
+    const deletePost = async (id: string) => {
+        await deletePostById({ id });
+        await getPosts();
+    }
+
 
     const renderItem = ({ item }: { item: iPost }) => {
         return (
-            <ManagePostCard id={item._id} key={item._id} title={item.title} description={item.description} />
+            <ManagePostCard id={item._id} key={item._id} title={item.title} description={item.description} handleDeleteFunction={deletePost} />
         );
     };
 

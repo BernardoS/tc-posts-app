@@ -1,11 +1,14 @@
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
-import Header from "@/components/Header/Header"
 import ManagePostCard from "@/components/ManagePostCard/ManagePostCard";
 import { useAuth } from "@/contexts/AuthContext";
+import { deletePostById, getAllPosts } from "@/services/api.service";
 import { ManageSystemContainer, ManageSystemContent, ManageSystemLine, ManageSystemSubTitle, ManageSystemTitle } from "@/styles/manageSystemStyle"
-import { Redirect } from "expo-router";
-import React from "react";
-import { FlatList, Text, View } from "react-native"
+import { Redirect, router } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback, useState } from "react";
+import { FlatList, View, Text, Alert } from "react-native"
+import { CreatePostButton } from "@/styles/savePostStyles";
+import { FontAwesome } from "@expo/vector-icons";
 
 
 interface iPost {
@@ -23,19 +26,33 @@ interface iPost {
 export default function ListPost() {
 
     const { permission } = useAuth();
+    const [postList, setPostList] = useState<iPost[]>()
 
     if (permission != "professor") {
         return <Redirect href="/private" />
     }
 
-    const data: iPost[] = [
-        { _id: '1', title: 'Geografia - O que é latitude e longitude?', description: 'Descubra como a latitude e a longitude ajudam a localizar qualquer ponto no planeta e sua importância para a navegação e os sistemas de GPS' },
-        { _id: '2', title: 'Geografia - O que é latitude e longitude?', description: 'Descubra como a latitude e a longitude ajudam a localizar qualquer ponto no planeta e sua importância para a navegação e os sistemas de GPS' },
-    ];
+    useFocusEffect(
+        useCallback(() => {
+            getPosts()
+        }, [])
+    );
+
+    const getPosts = async () => {
+        const data = await getAllPosts();
+
+        setPostList(data)
+    }
+
+    const deletePost = async (id: string) => {
+        await deletePostById({ id });
+        await getPosts();
+    }
+
 
     const renderItem = ({ item }: { item: iPost }) => {
         return (
-            <ManagePostCard id={item._id} key={item._id} title={item.title} description={item.description} />
+            <ManagePostCard id={item._id} key={item._id} title={item.title} description={item.description} handleDeleteFunction={deletePost} />
         );
     };
 
@@ -47,18 +64,24 @@ export default function ListPost() {
             <ManageSystemContainer>
                 <ManageSystemContent>
                     <ManageSystemTitle style={{ fontFamily: 'MavenPro-Bold' }}>
-                        Gerenciar Plataforma
+                        Gerenciar Posts
                     </ManageSystemTitle>
                     <ManageSystemSubTitle style={{ fontFamily: 'MavenPro-Bold' }}>
                         Aqui você pode gerenciar os posts da plataforma.
                     </ManageSystemSubTitle>
+                    <CreatePostButton onPress={() => router.navigate(`/private/post/savepost`)}>
+                        <FontAwesome size={18} name="book" />
+                        <Text style={{ fontSize: 16, fontFamily: 'MavenPro-Bold', color: '#08244B' }}>
+                            Cadastrar Post
+                        </Text>
+                    </CreatePostButton>
                     <ManageSystemLine />
                 </ManageSystemContent>
             </ManageSystemContainer>
 
 
             <FlatList
-                data={data}
+                data={postList}
                 renderItem={renderItem}
                 keyExtractor={(item: { _id: string }) => item._id}
                 style={{ padding: 10 }}

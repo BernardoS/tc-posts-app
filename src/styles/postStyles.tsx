@@ -58,7 +58,7 @@ export const DeleteButton = styled.TouchableOpacity`
 `;
 
 export const EditButton = styled.TouchableOpacity`
-    background-color:#FCC918;
+    background-color: #FCC918;
     border:2px solid #08244B;
     display:flex;
     align-items:center;
@@ -70,4 +70,12 @@ export const EditButton = styled.TouchableOpacity`
     border-radius:10px;
     padding:8px 16px;
     width:45%;
+`;
+
+
+export const AuthorLabel = styled.Text`
+    color: #08244B;
+    opacity:0.8;
+    margin-top:16px;
+    font-size:16px;
 `;

@@ -52,3 +52,11 @@ export const PostListSubTitle = styled.Text`
     font-size:16px;
     margin: 8px 0px;
 `;
+
+export const LoadingContainer = styled.View`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:50%;
+`;

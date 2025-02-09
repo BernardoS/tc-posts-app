@@ -2,11 +2,11 @@ import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
 import ManagePostCard from "@/components/ManagePostCard/ManagePostCard";
 import { useAuth } from "@/contexts/AuthContext";
 import { deletePostById, getAllPosts } from "@/services/api.service";
-import { ManageSystemContainer, ManageSystemContent, ManageSystemLine, ManageSystemSubTitle, ManageSystemTitle } from "@/styles/manageSystemStyle"
+import { LoadingContainer, ManageSystemContainer, ManageSystemContent, ManageSystemLine, ManageSystemSubTitle, ManageSystemTitle } from "@/styles/manageSystemStyle"
 import { Redirect, router } from "expo-router";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import { FlatList, View, Text, Alert } from "react-native"
+import { FlatList, View, Text, Alert, ActivityIndicator } from "react-native"
 import { CreatePostButton } from "@/styles/savePostStyles";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -26,7 +26,8 @@ interface iPost {
 export default function ListPost() {
 
     const { permission } = useAuth();
-    const [postList, setPostList] = useState<iPost[]>()
+    const [postList, setPostList] = useState<iPost[]>();
+    const [loading, setLoading] = useState(false);
 
     if (permission != "professor") {
         return <Redirect href="/private" />
@@ -39,9 +40,11 @@ export default function ListPost() {
     );
 
     const getPosts = async () => {
+        await setLoading(true);
         const data = await getAllPosts();
 
-        setPostList(data)
+        await setPostList(data);
+        await setLoading(false);
     }
 
     const deletePost = async (id: string) => {
@@ -79,14 +82,19 @@ export default function ListPost() {
                 </ManageSystemContent>
             </ManageSystemContainer>
 
-
-            <FlatList
-                data={postList}
-                renderItem={renderItem}
-                keyExtractor={(item: { _id: string }) => item._id}
-                style={{ padding: 10 }}
-                keyboardShouldPersistTaps="handled"
-            />
+            {loading ? (
+                <LoadingContainer>
+                    <ActivityIndicator size="large" color="#08244B" />
+                </LoadingContainer>
+            ) : (
+                <FlatList
+                    data={postList}
+                    renderItem={renderItem}
+                    keyExtractor={(item: { _id: string }) => item._id}
+                    style={{ padding: 10 }}
+                    keyboardShouldPersistTaps="handled"
+                />
+            )}
 
         </View>
     )

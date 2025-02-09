@@ -1,7 +1,8 @@
 import Header from "@/components/Header/Header";
 import PostCard from "@/components/PostCard/PostCard";
-import { getAllPosts } from "@/services/api.service";
+import { getAllPosts, getPostByText } from "@/services/api.service";
 import {
+    LoadingContainer,
     PostListSubTitle,
     PostListTitle,
     SearchButton,
@@ -12,7 +13,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { ActivityIndicator, Alert, FlatList, View } from "react-native";
 
 
 interface iPost {
@@ -29,44 +30,72 @@ interface iPost {
 
 export default function Search() {
 
-    const searchParams = useLocalSearchParams();
-    
+
     const navigation = useNavigation();
 
     const [searchTerm, setSearchTerm] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     const [postList, setPostList] = useState<iPost[]>();
 
-    const handleSearch = () => {
-        console.log("Pesquisa realizada com o termo:" + searchTerm)
+    const validateSearchTerm = (term: string | undefined): boolean => {
+        const termRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ ]+$/;
+
+        if (!term)
+            return false;
+
+        if (!termRegex.test(term))
+            return false;
+
+        return true;
     }
 
+    const handleSearch = async () => {
+        if (!searchTerm) {
+            await getPosts();
+        } else {
+            const searchTermIsValid = validateSearchTerm(searchTerm);
+
+            if (!searchTermIsValid) {
+                Alert.alert("Ops... Houve um problema", "O texto digitado não é valido, por favor, digite novamente!");
+                return;
+            }
+
+            await searchPosts(searchTerm);
+        }
+    }
+
+
     useEffect(() => {
-        const unsubscribe = navigation.addListener("focus", ()=>getPosts());
+        const unsubscribe = navigation.addListener("focus", () => getPosts());
         return unsubscribe;
     }, [navigation]);
 
     useEffect(() => {
-        if (searchParams.term != null && searchParams.term != "" && searchParams != undefined) {
-            setSearchTerm(searchParams.term.toString());
-        }
-    }, [searchParams]);
-
-    useEffect(()=>{
         getPosts();
-    },[])
+    }, [])
 
+
+    const searchPosts = async (text: string) => {
+        await setLoading(true);
+
+        const data = await getPostByText({ text });
+
+        await setPostList(data);
+
+        await setLoading(false);
+    }
 
     const getPosts = async () => {
+        await setLoading(true);
 
         const data = await getAllPosts();
 
-        setPostList(data)
+        await setPostList(data);
+
+        await setLoading(false);
     }
-
-    
-
-
 
     const renderItem = ({ item }: { item: iPost }) => {
         return (
@@ -94,14 +123,22 @@ export default function Search() {
                         name="search" />
                 </SearchButton>
             </SearchInputContainer>
-
-            <FlatList
-                data={postList}
-                renderItem={renderItem}
-                keyExtractor={(item: { _id: string }) => item._id}
-                style={{ padding: 10 }}
-                keyboardShouldPersistTaps="handled"
-            />
+            {
+                loading ? (
+                    <LoadingContainer>
+                        <ActivityIndicator size="large" color="#08244B" />
+                    </LoadingContainer>
+                ) : (
+                    <FlatList
+                    data={postList}
+                    renderItem={renderItem}
+                    keyExtractor={(item: { _id: string }) => item._id}
+                    style={{ padding: 10 }}
+                    keyboardShouldPersistTaps="handled"
+                />
+                )
+            }
+           
 
         </View>
     )

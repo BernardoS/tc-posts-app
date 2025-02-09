@@ -66,6 +66,25 @@ export const getPostById = async ({ id }: getPostByIdParams) => {
   }
 }
 
+interface getPostByTextParams {
+  text: string
+}
+
+export const getPostByText = async ({ text }: getPostByTextParams) => {
+  try {
+    const post: any = await api.get(`/public/posts/search?q=${text}`);
+    if (post)
+      return post.data;
+
+    if (!post)
+      return null;
+  } catch (error) {
+    console.log(error);
+    throw new Error("[getPostByText] Erro ao buscar os dados do post no banco de dados");
+  }
+
+}
+
 
 interface deletePostByIdParams {
   id: string;

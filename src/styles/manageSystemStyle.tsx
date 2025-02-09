@@ -72,3 +72,11 @@ export const CreateUserButton = styled.TouchableOpacity`
     padding:8px 16px;
     width:100%;
 `;
+
+export const LoadingContainer = styled.View`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    margin-top:64px;
+`;

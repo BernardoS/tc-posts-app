@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { deleteUserById, getProfessors, getStudents } from "@/services/api.service";
 import {
     CreateUserButton,
+    LoadingContainer,
     ManageSystemContainer,
     ManageSystemContent,
     ManageSystemLine,
@@ -15,6 +16,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Redirect, router, useLocalSearchParams } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
+    ActivityIndicator,
     FlatList,
     Text
 } from "react-native";
@@ -30,6 +32,7 @@ export default function ListUser() {
 
     const { type } = useLocalSearchParams();
     const [users, setUsers] = useState<iUser[]>([]);
+    const [loading, setLoading] = useState(false);
     const { permission } = useAuth();
 
 
@@ -40,15 +43,16 @@ export default function ListUser() {
     );
 
     const inicializaPagina = async () => {
+        await setLoading(true);
         if (type) {
             switch (type) {
                 case "professor":
                     const professors = await getProfessors();
-                    setUsers(professors);
+                    await setUsers(professors);
                     break;
                 case "student":
                     const students = await getStudents();
-                    setUsers(students);
+                    await setUsers(students);
                     break;
                 default:
                     router.navigate("/private");
@@ -57,11 +61,15 @@ export default function ListUser() {
         } else {
             router.navigate("/private")
         }
+
+        await setLoading(false);
     }
 
     const deleteUser = async (id: string) => {
+        await setLoading(true);
         await deleteUserById({ id });
         await inicializaPagina();
+        await setLoading(false);
     }
 
     const renderItem = ({ item }: { item: iUser }) => {
@@ -100,13 +108,22 @@ export default function ListUser() {
                 </ManageSystemContent>
             </ManageSystemContainer>
 
-            <FlatList
-                data={users}
-                renderItem={renderItem}
-                keyExtractor={(item: { _id: string }) => item._id}
-                style={{ padding: 10 }}
-                keyboardShouldPersistTaps="handled"
-            />
+            {loading ? (
+                <>
+                    <LoadingContainer>
+                        <ActivityIndicator size="large" color="#08244B" />
+                    </LoadingContainer>
+                </>
+            ) : (
+                <FlatList
+                    data={users}
+                    renderItem={renderItem}
+                    keyExtractor={(item: { _id: string }) => item._id}
+                    style={{ padding: 10 }}
+                    keyboardShouldPersistTaps="handled"
+                />
+            )}
+
         </>
     )
 }

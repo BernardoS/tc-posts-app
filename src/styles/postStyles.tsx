@@ -79,3 +79,11 @@ export const AuthorLabel = styled.Text`
     margin-top:16px;
     font-size:16px;
 `;
+
+export const LoadingContainer = styled.View`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100%;
+`;

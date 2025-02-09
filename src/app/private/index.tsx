@@ -2,6 +2,7 @@ import Header from "@/components/Header/Header";
 import PostCard from "@/components/PostCard/PostCard";
 import { getAllPosts, getPostByText } from "@/services/api.service";
 import {
+    LoadingContainer,
     PostListSubTitle,
     PostListTitle,
     SearchButton,
@@ -12,7 +13,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
-import { Alert, FlatList, View } from "react-native";
+import { ActivityIndicator, Alert, FlatList, View } from "react-native";
 
 
 interface iPost {
@@ -34,9 +35,11 @@ export default function Search() {
 
     const [searchTerm, setSearchTerm] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     const [postList, setPostList] = useState<iPost[]>();
 
-    const validateSearchTerm = (term: string | undefined):boolean => {
+    const validateSearchTerm = (term: string | undefined): boolean => {
         const termRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ ]+$/;
 
         if (!term)
@@ -48,17 +51,17 @@ export default function Search() {
         return true;
     }
 
-    const handleSearch = async() => {
+    const handleSearch = async () => {
         if (!searchTerm) {
             await getPosts();
         } else {
             const searchTermIsValid = validateSearchTerm(searchTerm);
 
-            if(!searchTermIsValid){
-                Alert.alert("Ops... Houve um problema","O texto digitado não é valido, por favor, digite novamente!");
+            if (!searchTermIsValid) {
+                Alert.alert("Ops... Houve um problema", "O texto digitado não é valido, por favor, digite novamente!");
                 return;
             }
-            
+
             await searchPosts(searchTerm);
         }
     }
@@ -74,22 +77,25 @@ export default function Search() {
     }, [])
 
 
-    const searchPosts = async (text:string) =>{
-        const data = await getPostByText({text});
+    const searchPosts = async (text: string) => {
+        await setLoading(true);
 
-        setPostList(data);
+        const data = await getPostByText({ text });
+
+        await setPostList(data);
+
+        await setLoading(false);
     }
 
     const getPosts = async () => {
+        await setLoading(true);
 
         const data = await getAllPosts();
 
-        setPostList(data)
+        await setPostList(data);
+
+        await setLoading(false);
     }
-
-
-
-
 
     const renderItem = ({ item }: { item: iPost }) => {
         return (
@@ -117,14 +123,22 @@ export default function Search() {
                         name="search" />
                 </SearchButton>
             </SearchInputContainer>
-
-            <FlatList
-                data={postList}
-                renderItem={renderItem}
-                keyExtractor={(item: { _id: string }) => item._id}
-                style={{ padding: 10 }}
-                keyboardShouldPersistTaps="handled"
-            />
+            {
+                loading ? (
+                    <LoadingContainer>
+                        <ActivityIndicator size="large" color="#08244B" />
+                    </LoadingContainer>
+                ) : (
+                    <FlatList
+                    data={postList}
+                    renderItem={renderItem}
+                    keyExtractor={(item: { _id: string }) => item._id}
+                    style={{ padding: 10 }}
+                    keyboardShouldPersistTaps="handled"
+                />
+                )
+            }
+           
 
         </View>
     )

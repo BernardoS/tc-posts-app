@@ -1,7 +1,7 @@
-import { AuthorLabel, DeleteButton, EditButton, PostActionContainer, PostDate, PostHeader, PostSectionContainer, PostSectionTitle, PostTitle } from "@/styles/postStyles";
+import { AuthorLabel, DeleteButton, EditButton, LoadingContainer, PostActionContainer, PostDate, PostHeader, PostSectionContainer, PostSectionTitle, PostTitle } from "@/styles/postStyles";
 import { router, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, ScrollView, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native";
 import GenericPostCover from "../../../assets/images/generic-post-cover.png";
 import CloseableHeader from "@/components/CloseableHeader/CloseableHeader";
@@ -21,6 +21,7 @@ export default function Post() {
 
     const { id } = useLocalSearchParams();
     const [postData, setPostData] = useState<iPost>();
+    const [loading, setLoading] = useState(false);
 
     useFocusEffect(
         useCallback(() => {
@@ -37,15 +38,19 @@ export default function Post() {
     }
 
     const getPostData = async (id: string) => {
+        await setLoading(true);
+        
         const postData = await getPostById({ id });
 
-        setPostData({
+        await setPostData({
             title: postData.title,
             author: postData.author,
             content: postData.content,
             createdAt: postData.createdAt,
             description: postData.description
         });
+
+        await setLoading(false);
 
     }
 
@@ -65,25 +70,34 @@ export default function Post() {
             <CloseableHeader>
                 Post
             </CloseableHeader>
-            <PostHeader source={GenericPostCover} reziseMode="cover" >
-                <PostTitle style={{ fontFamily: 'MavenPro-Bold' }}>{postData?.title} </PostTitle>
-                <PostDate style={{ fontFamily: 'MavenPro-Bold' }}>Criado em: {formatarData(postData?.createdAt)}</PostDate>
-            </PostHeader>
-            <PostSectionContainer>
-                <PostSectionTitle style={{ fontFamily: 'MavenPro-Bold' }} >Descrição</PostSectionTitle>
-                <Text style={{ fontFamily: 'MavenPro-Bold' }} >
-                    {postData?.description}
-                </Text>
-            </PostSectionContainer>
-            <PostSectionContainer>
-                <PostSectionTitle style={{ fontFamily: 'MavenPro-Bold' }} >Conteúdo</PostSectionTitle>
-                <Text style={{ fontFamily: 'MavenPro-Bold' }} >
-                    {postData?.content}
-                </Text>
-                <AuthorLabel style={{ fontFamily: 'MavenPro-Bold' }}>
-                    Escrito por: {postData?.author}
-                </AuthorLabel>
-            </PostSectionContainer>
+            {loading ? (
+                <LoadingContainer>
+                    <ActivityIndicator size="large" color="#08244B" />
+                </LoadingContainer>
+            ) : (
+                <>
+                    <PostHeader source={GenericPostCover} reziseMode="cover" >
+                        <PostTitle style={{ fontFamily: 'MavenPro-Bold' }}>{postData?.title} </PostTitle>
+                        <PostDate style={{ fontFamily: 'MavenPro-Bold' }}>Criado em: {formatarData(postData?.createdAt)}</PostDate>
+                    </PostHeader>
+                    <PostSectionContainer>
+                        <PostSectionTitle style={{ fontFamily: 'MavenPro-Bold' }} >Descrição</PostSectionTitle>
+                        <Text style={{ fontFamily: 'MavenPro-Bold' }} >
+                            {postData?.description}
+                        </Text>
+                    </PostSectionContainer>
+                    <PostSectionContainer>
+                        <PostSectionTitle style={{ fontFamily: 'MavenPro-Bold' }} >Conteúdo</PostSectionTitle>
+                        <Text style={{ fontFamily: 'MavenPro-Bold' }} >
+                            {postData?.content}
+                        </Text>
+                        <AuthorLabel style={{ fontFamily: 'MavenPro-Bold' }}>
+                            Escrito por: {postData?.author}
+                        </AuthorLabel>
+                    </PostSectionContainer>
+                </>
+            )}
+
 
         </ScrollView>
     );

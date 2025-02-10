@@ -100,11 +100,6 @@ Para o correto funcionamento da autenticação do app é necessária a configura
     FIREBASE_APP_ID=
     API_BASE_URL=
 ```
-
-## Demonstração do app
-
-<video controls src="demonstration-1.mp4" title="Title"></video>
-
 --------
 ## Experiências e desafios do desenvolvimento
 

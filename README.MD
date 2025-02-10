@@ -5,6 +5,15 @@
 ![alt text](Telas.png)
 
 
+## Tecnologias do app
+
+![alt text](<Tecnologias do App.png>)
+
+
+## Arquitetura da aplicação
+
+![alt text](<Arquitetuda da aplicação.png>)
+
 ## Configuração das variáveis de ambiente
 
 ```

@@ -92,12 +92,12 @@ OBS.: Recomenda-se o uso do aplicativo Expo Go para executar o projeto:
 Para o correto funcionamento da autenticação do app é necessária a configuração de um arquivo `.env` com as seguintes variáveis, que podem ser obtidas no seu projeto do firebase (exceto a variável `API_BASE_URL` que deve conter a url para se conectar ao back-end da aplicação);
 
 ```
-    FIREBASE_API_KEY=
-    FIREBASE_AUTH_DOMAIN=
-    FIREBASE_PROJECT_ID=
-    FIREBASE_STORAGE_BUCKET=
-    FIREBASE_MESSAGING_SENDER_ID=
-    FIREBASE_APP_ID=
+    EXPO_PUBLIC_FIREBASE_API_KEY=
+    EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=
+    EXPO_PUBLIC_FIREBASE_PROJECT_ID=
+    EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=
+    EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+    EXPO_PUBLIC_FIREBASE_APP_ID=
     API_BASE_URL=
 ```
 --------
